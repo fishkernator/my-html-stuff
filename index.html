@@ -3,122 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inkwork — A Fiction Writing Curriculum</title>
+  <title>The Workshop — A Fiction Writing Curriculum</title>
   <meta name="description" content="A free, structured, ground-up curriculum for learning to write fiction.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page">
 
-    <!-- Top bar ----------------------------------------------------------->
+    <!-- MASTHEAD: monogram + wordmark + boxed nav (Gwern-style) ----------->
     <header class="masthead">
-      <a class="brand" href="index.html"><span class="mark">Ink</span>work</a>
-      <nav>
-        <a href="index.html">Curriculum</a>
-        <a href="lesson-1-1.html">Start here</a>
+      <span class="monogram" aria-hidden="true">
+        <!-- hand-drawn fountain-pen nib -->
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M50 6 L78 64 Q50 86 22 64 Z" fill="currentColor" stroke="none"/>
+          <path d="M50 6 L78 64 Q50 86 22 64 Z"/>
+          <line x1="50" y1="30" x2="50" y2="70" stroke="#fbf8f3" stroke-width="3"/>
+          <circle cx="50" cy="58" r="6" fill="#fbf8f3" stroke="none"/>
+          <line x1="50" y1="86" x2="50" y2="96" stroke-width="3"/>
+        </svg>
+      </span>
+      <a class="wordmark" href="index.html">The Workshop<span class="sub">Fiction, from the ground up</span></a>
+      <nav class="topnav">
+        <a href="index.html">Index</a>
+        <a href="lesson-1-1.html">Start</a>
+        <a href="#curriculum">Lessons</a>
+        <a href="#about">About</a>
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark</button>
       </nav>
     </header>
+    <hr class="masthead-rule">
+    <hr class="masthead-rule thin">
 
     <article>
-      <p class="eyebrow">A free fiction-writing course</p>
-      <h1>Learn to write fiction, from the ground up.</h1>
 
-      <p class="lede">Most writing advice is a pile of disconnected tips. This is
-        not that. <em>Inkwork</em> is a structured curriculum that treats fiction
-        the way a drawing course treats drawing: as a set of concrete,
-        learnable fundamentals, practiced in order, each one building on the
-        last. You start with the sentence and you end with a finished story —
-        and at every step you know exactly what you are practicing and why.</p>
+      <p class="lede">This is a free, self-directed course in writing fiction.
+        It is built on a single stubborn premise: that storytelling is not a
+        gift you are born with but a <em>craft</em> made of nameable, learnable,
+        practiceable parts — and that you get good at it the same boring,
+        reliable way you get good at anything, by drilling the fundamentals in
+        order until they stop being hard.<sup class="sn-num"></sup><span class="sidenote">The
+        model here is <a href="https://drawabox.com">Drawabox</a>, the drawing
+        course that refuses to let you draw a face until you can draw a
+        believable box. We start with the sentence.</span></p>
 
-      <p>Work through the units in sequence. Each lesson explains one idea,
-        shows it in action, and ends with an exercise you actually do. Do the
-        exercises. Reading about writing is not writing.</p>
+      <p class="flush"><span class="label-inline">How this works:</span> the
+        lessons below run in sequence, from the smallest unit of fiction (the
+        sentence) up to the largest (a finished story). Each one explains a
+        single idea, shows it working, and ends with an exercise you actually
+        do. Reading about writing is not writing; the reps are the whole
+        point.<sup class="sn-num"></sup><span class="sidenote">Keep everything
+        you write. Lessons later in the course deliberately send you back to
+        dig up things you made early on.</span></p>
 
-      <div class="callout">
-        <div class="callout-label">How to use this course</div>
-        <p>Go in order. Don't skip the fundamentals because they feel
-          obvious — feeling obvious and being easy to do are very different
-          things. Keep everything you write; you'll revisit it later.</p>
+      <p><span class="label-inline">Features:</span> this site has a
+        <strong>dark mode</strong> (the toggle in the top-right corner), wide
+        margins that hold <em>sidenotes</em> like the ones to your right
+        instead of footnotes you have to hunt for, and absolutely no accounts,
+        tracking, paywalls, or popups asking for your email. It is, proudly, a
+        small handmade thing.</p>
+
+      <!-- hand-drawn ornamental divider -->
+      <span class="ornament" aria-hidden="true">
+        <svg viewBox="0 0 240 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="12" x2="96" y2="12"/>
+          <line x1="144" y1="12" x2="234" y2="12"/>
+          <path d="M104 12 Q112 2 120 12 Q128 22 136 12" />
+          <circle cx="120" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+
+      <!-- THE CURRICULUM ------------------------------------------------->
+      <h2 class="section-head" id="curriculum">The Curriculum</h2>
+
+      <div class="unit-block">
+        <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;I</span> The Sentence</h3>
+        <p class="unit-note">The atom of fiction. Control this and everything stacked on top of it gets easier.</p>
+        <ul class="index-list">
+          <li><span class="lx">1.1</span><a href="lesson-1-1.html">So You Want To Be One Of The Greats</a><span class="ix-note">— concrete detail, and why it beats everything</span></li>
+          <li><span class="lx">1.2</span><a href="lesson-1-1.html">Tennis, Trigonometry, Tornadoes</a><span class="ix-note">— rhythm, and the music of sentence length</span><span class="soon">Draft</span></li>
+          <li><span class="lx">1.3</span><a href="lesson-1-1.html">Where The Money Is</a><span class="ix-note">— verbs do the heavy lifting</span><span class="soon">Soon</span></li>
+        </ul>
       </div>
 
-      <h2 class="smallcaps">The curriculum</h2>
-
-      <!-- UNIT 1 ---------------------------------------------------------->
-      <section class="unit">
-        <div class="unit-header">
-          <span class="unit-number">Unit 1</span>
-          <div>
-            <h3 class="unit-title">The Sentence</h3>
-            <p class="unit-desc">The smallest unit of fiction. Control this and everything above it gets easier.</p>
-          </div>
-        </div>
-        <ol class="lesson-list">
-          <li><a href="lesson-1-1.html"><span class="ln">1.1</span><span>The Concrete Detail</span></a></li>
-          <li><a href="lesson-1-1.html"><span class="ln">1.2</span><span class="muted">Rhythm &amp; Sentence Length</span><span class="soon">Draft</span></a></li>
-          <li><a href="lesson-1-1.html"><span class="ln">1.3</span><span class="muted">Verbs Do the Work</span><span class="soon">Soon</span></a></li>
-        </ol>
-      </section>
-
-      <!-- UNIT 2 ---------------------------------------------------------->
-      <section class="unit">
-        <div class="unit-header">
-          <span class="unit-number">Unit 2</span>
-          <div>
-            <h3 class="unit-title">The Scene</h3>
-            <p class="unit-desc">Turning sentences into a continuous, grounded moment a reader can stand inside.</p>
-          </div>
-        </div>
-        <ol class="lesson-list">
-          <li><a href="lesson-1-1.html"><span class="ln">2.1</span><span class="muted">Where Are We? Grounding a Scene</span><span class="soon">Soon</span></a></li>
-          <li><a href="lesson-1-1.html"><span class="ln">2.2</span><span class="muted">Dialogue as Action</span><span class="soon">Soon</span></a></li>
-        </ol>
-      </section>
-
-      <!-- UNIT 3 ---------------------------------------------------------->
-      <section class="unit">
-        <div class="unit-header">
-          <span class="unit-number">Unit 3</span>
-          <div>
-            <h3 class="unit-title">Character</h3>
-            <p class="unit-desc">Want, fear, contradiction — building people the reader can't look away from.</p>
-          </div>
-        </div>
-        <ol class="lesson-list">
-          <li><a href="lesson-1-1.html"><span class="ln">3.1</span><span class="muted">Desire Drives Everything</span><span class="soon">Soon</span></a></li>
-          <li><a href="lesson-1-1.html"><span class="ln">3.2</span><span class="muted">Showing Interiority</span><span class="soon">Soon</span></a></li>
-        </ol>
-      </section>
-
-      <!-- UNIT 4 ---------------------------------------------------------->
-      <section class="unit">
-        <div class="unit-header">
-          <span class="unit-number">Unit 4</span>
-          <div>
-            <h3 class="unit-title">Plot &amp; Structure</h3>
-            <p class="unit-desc">Cause and effect, escalation, and the shape of a story that pays off.</p>
-          </div>
-        </div>
-        <ol class="lesson-list">
-          <li><a href="lesson-1-1.html"><span class="ln">4.1</span><span class="muted">Scene &amp; Sequel</span><span class="soon">Soon</span></a></li>
-          <li><a href="lesson-1-1.html"><span class="ln">4.2</span><span class="muted">Raising the Stakes</span><span class="soon">Soon</span></a></li>
-        </ol>
-      </section>
-
-      <div class="callout exercise">
-        <div class="callout-label">Before you begin</div>
-        <p>Get a dedicated notebook or document for this course. Everything you
-          write here is practice, and practice is allowed to be bad. The point
-          is the reps, not the result.</p>
+      <div class="unit-block">
+        <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;II</span> The Scene</h3>
+        <p class="unit-note">Turning sentences into a continuous moment a reader can stand inside.</p>
+        <ul class="index-list">
+          <li><span class="lx">2.1</span><a href="lesson-1-1.html">You Are Here</a><span class="ix-note">— grounding a scene in space and time</span><span class="soon">Soon</span></li>
+          <li><span class="lx">2.2</span><a href="lesson-1-1.html">People Talking Is Not Conversation</a><span class="ix-note">— dialogue as action, not transcription</span><span class="soon">Soon</span></li>
+        </ul>
       </div>
+
+      <div class="unit-block">
+        <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;III</span> Character</h3>
+        <p class="unit-note">Building people the reader can't look away from — want, fear, and contradiction.</p>
+        <ul class="index-list">
+          <li><span class="lx">3.1</span><a href="lesson-1-1.html">Everybody Wants Something</a><span class="ix-note">— desire is the engine of character</span><span class="soon">Soon</span></li>
+          <li><span class="lx">3.2</span><a href="lesson-1-1.html">The Lie They Tell Themselves</a><span class="ix-note">— interiority and self-deception</span><span class="soon">Soon</span></li>
+        </ul>
+      </div>
+
+      <div class="unit-block">
+        <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;IV</span> Plot &amp; Structure</h3>
+        <p class="unit-note">Cause, effect, escalation — the shape of a story that actually pays off.</p>
+        <ul class="index-list">
+          <li><span class="lx">4.1</span><a href="lesson-1-1.html">And Then, Therefore, But</a><span class="ix-note">— the grammar of cause and effect</span><span class="soon">Soon</span></li>
+          <li><span class="lx">4.2</span><a href="lesson-1-1.html">Make It Worse</a><span class="ix-note">— raising the stakes without cheating</span><span class="soon">Soon</span></li>
+        </ul>
+      </div>
+
+      <div class="unit-block">
+        <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;V</span> Revision</h3>
+        <p class="unit-note">Where bad first drafts quietly become good stories.</p>
+        <ul class="index-list">
+          <li><span class="lx">5.1</span><a href="lesson-1-1.html">Kill Your Darlings, Bury The Bodies</a><span class="ix-note">— cutting what you love for what works</span><span class="soon">Soon</span></li>
+        </ul>
+      </div>
+
+      <span class="ornament" aria-hidden="true">
+        <svg viewBox="0 0 240 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="6" y1="12" x2="96" y2="12"/>
+          <line x1="144" y1="12" x2="234" y2="12"/>
+          <path d="M104 12 Q112 2 120 12 Q128 22 136 12" />
+          <circle cx="120" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+
+      <h2 class="section-head" id="about">About</h2>
+      <p class="flush">This course is a work in progress, written and revised in
+        the open. Lessons marked <span class="smallcaps">soon</span> are
+        outlined but not yet written; the ones without a tag are ready to read.
+        The fastest way to start is simply to <a href="lesson-1-1.html">open
+        Lesson 1.1</a> and do the exercise at the bottom.</p>
 
     </article>
 
     <footer class="site-footer">
-      <div class="page" style="padding:0;">
-        <p><strong>Inkwork</strong> — a work-in-progress fiction-writing curriculum.
-          Built in the spirit of Drawabox, dressed in the typography of Gwern.net.</p>
-      </div>
+      <p><strong>The Workshop</strong> — a small, handmade fiction-writing
+        curriculum. Built in the spirit of <a href="https://drawabox.com">Drawabox</a>,
+        in the typographic tradition of <a href="https://gwern.net">Gwern.net</a>.</p>
     </footer>
 
   </div>
