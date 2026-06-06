@@ -1,0 +1,456 @@
+/* =========================================================================
+   Fiction Writing Curriculum — stylesheet
+   -------------------------------------------------------------------------
+   Design brief: Gwern.net's typography & functionality (serif body, dense
+   justified text, sidenotes, dropcaps, smallcaps, floating table of
+   contents, dark mode) wearing Drawabox's clothes (warm off-white
+   background + a red-orange accent, content-first lesson layout).
+
+   This file is heavily commented so you can tweak it yourself. Colors,
+   fonts, and spacing all live in the :root variables right below — change
+   a value there and it updates everywhere.
+   ========================================================================= */
+
+/* ---- Fonts: Source family, the same one Gwern self-hosts ---------------- */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap');
+
+/* =========================================================================
+   1. DESIGN TOKENS — change these to restyle the whole site
+   ========================================================================= */
+:root {
+  /* Typography */
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans:  "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  --font-mono:  "Source Code Pro", "SF Mono", Menlo, monospace;
+
+  --text-size: 20px;        /* base body size; Gwern runs large & comfortable */
+  --line-height: 1.65;
+  --measure: 680px;         /* width of the reading column */
+  --page-max: 1180px;       /* total width incl. room for sidenotes */
+
+  /* Colors — Drawabox warmth over Gwern structure */
+  --bg:          #fbf8f3;   /* warm off-white (paper) */
+  --bg-raised:   #ffffff;   /* cards / callouts sit slightly brighter */
+  --text:        #1c1a17;   /* near-black, faintly warm */
+  --text-soft:   #5f5a52;   /* captions, metadata, sidenotes */
+  --rule:        #e3ddd2;   /* hairlines & dividers */
+  --rule-strong: #cfc7b8;
+
+  --accent:        #d8472b; /* Drawabox red-orange */
+  --accent-dark:   #b3361e; /* hover / pressed */
+  --accent-tint:   #f7e9e3; /* faint wash behind callouts */
+
+  /* Links: Gwern keeps them near-black & underlined; we add the red on hover */
+  --link:        #1c1a17;
+  --link-hover:  #d8472b;
+
+  --radius: 4px;
+}
+
+/* ---- Dark mode (toggled by the button in the header) ------------------- */
+:root[data-theme="dark"] {
+  --bg:          #1a1816;
+  --bg-raised:   #221f1c;
+  --text:        #e8e3da;
+  --text-soft:   #a39c8f;
+  --rule:        #34302b;
+  --rule-strong: #463f37;
+
+  --accent:        #f06a4d;
+  --accent-dark:   #f8856b;
+  --accent-tint:   #2c211d;
+
+  --link:        #e8e3da;
+  --link-hover:  #f06a4d;
+}
+
+/* =========================================================================
+   2. BASE
+   ========================================================================= */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: var(--text-size);
+  line-height: var(--line-height);
+  font-feature-settings: "kern", "liga", "onum";  /* old-style figures, like Gwern */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+/* =========================================================================
+   3. LINKS — monochrome by default, red-orange on hover (Gwern + Drawabox)
+   ========================================================================= */
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--rule-strong);
+  transition: color .12s ease, text-decoration-color .12s ease;
+}
+a:hover {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
+/* =========================================================================
+   4. PAGE FRAME
+   ========================================================================= */
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Top bar -------------------------------------------------------------- */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--rule);
+  padding: 22px 0 16px;
+  margin-bottom: 8px;
+}
+.masthead .brand {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: .02em;
+  text-decoration: none;
+  color: var(--text);
+}
+.masthead .brand .mark { color: var(--accent); }
+.masthead nav {
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.masthead nav a { text-decoration: none; color: var(--text-soft); }
+.masthead nav a:hover { color: var(--accent); }
+
+/* Dark-mode toggle button */
+.theme-toggle {
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--text-soft);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* =========================================================================
+   5. ARTICLE / READING COLUMN
+   ========================================================================= */
+article {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 28px 0 80px;
+  counter-reset: sidenote;       /* drives automatic sidenote numbering */
+}
+
+/* Justified, hyphenated body text — the dense Gwern look */
+article p {
+  text-align: justify;
+  hyphens: auto;
+  margin: 0 0 1.1em;
+}
+
+/* Headings — serif with a touch of smallcaps flavor */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  font-weight: 700;
+}
+h1 {
+  font-size: 2.4rem;
+  margin: .2em 0 .15em;
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: 1.5rem;
+  margin: 1.9em 0 .5em;
+  padding-bottom: .2em;
+  border-bottom: 1px solid var(--rule);
+}
+h3 {
+  font-size: 1.18rem;
+  margin: 1.6em 0 .4em;
+}
+/* small-caps section labels, very Gwern */
+.smallcaps,
+.eyebrow {
+  font-variant: small-caps;
+  letter-spacing: .04em;
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-variant: normal;
+  text-transform: uppercase;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--accent);
+  margin-bottom: .3em;
+}
+
+/* Dropcap on the opening paragraph — add class="lede" to a <p> */
+p.lede::first-letter {
+  font-weight: 700;
+  float: left;
+  font-size: 3.4em;
+  line-height: .72;
+  padding: .06em .08em 0 0;
+  margin-right: .04em;
+  color: var(--accent);
+}
+
+blockquote {
+  margin: 1.4em 0;
+  padding: .2em 0 .2em 1.1em;
+  border-left: 3px solid var(--accent);
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+code, pre { font-family: var(--font-mono); font-size: .85em; }
+pre {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.4em 0;
+}
+
+/* =========================================================================
+   6. SIDENOTES — Gwern's signature.  Usage in HTML:
+        text<sup class="sn-num"></sup><span class="sidenote">the note</span>
+      They float into the right margin on wide screens and fall inline,
+      numbered, on narrow screens. Numbering is automatic.
+   ========================================================================= */
+.sn-num { color: var(--accent); font-weight: 600; }
+.sn-num::before {
+  counter-increment: sidenote;
+  content: counter(sidenote);
+  font-size: .7em;
+  vertical-align: super;
+}
+.sidenote {
+  float: right;
+  clear: right;
+  width: 230px;
+  margin: .2em -270px .8em 0;   /* the negative margin pushes it into the gutter */
+  font-size: .82rem;
+  line-height: 1.4;
+  text-align: left;
+  color: var(--text-soft);
+  hyphens: none;
+}
+.sidenote::before {
+  content: counter(sidenote) " ";
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* =========================================================================
+   7. CALLOUT / EXERCISE BOXES — the Drawabox "homework" feel
+   ========================================================================= */
+.callout {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin: 1.8em 0;
+}
+.callout .callout-label {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: .4em;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout.exercise { background: var(--accent-tint); }
+
+/* =========================================================================
+   8. TABLE OF CONTENTS (in-page, top of a lesson)
+   ========================================================================= */
+.toc {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 1.5em 0 2.2em;
+  font-size: .92rem;
+}
+.toc .toc-title {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  margin-bottom: .6em;
+}
+.toc ol { margin: 0; padding-left: 1.4em; }
+.toc li { margin: .25em 0; }
+.toc a { text-decoration: none; color: var(--text); }
+.toc a:hover { color: var(--accent); }
+
+/* =========================================================================
+   9. CURRICULUM OVERVIEW (homepage unit/lesson listing, Drawabox-style)
+   ========================================================================= */
+.unit {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  margin: 1.4em 0;
+  overflow: hidden;
+}
+.unit-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.unit-number {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 3px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+.unit-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.unit-desc { color: var(--text-soft); margin: .1em 0 0; font-size: .95rem; }
+
+.lesson-list { list-style: none; margin: 0; padding: 6px 0; }
+.lesson-list li { margin: 0; }
+.lesson-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 22px;
+  text-decoration: none;
+  color: var(--text);
+}
+.lesson-list a:hover { background: var(--accent-tint); color: var(--text); }
+.lesson-list .ln { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 600; min-width: 2.6em; }
+.lesson-list .muted { color: var(--text-soft); }
+.lesson-list .soon {
+  margin-left: auto;
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 1px 7px;
+}
+
+/* =========================================================================
+   10. LESSON METADATA + PREV/NEXT NAV
+   ========================================================================= */
+.lesson-meta {
+  font-family: var(--font-sans);
+  font-size: .8rem;
+  color: var(--text-soft);
+  letter-spacing: .02em;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 0;
+  margin: .6em 0 1.6em;
+}
+.lesson-meta .accent { color: var(--accent); font-weight: 600; }
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 3em;
+  padding-top: 1.4em;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: .9rem;
+}
+.pager a { text-decoration: none; color: var(--text-soft); max-width: 45%; }
+.pager a:hover { color: var(--accent); }
+.pager .dir {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .68rem;
+  color: var(--accent);
+}
+.pager .next { text-align: right; margin-left: auto; }
+
+/* =========================================================================
+   11. FOOTER
+   ========================================================================= */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 40px;
+  padding: 26px 0 50px;
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  color: var(--text-soft);
+}
+.site-footer a { color: var(--text-soft); }
+
+/* =========================================================================
+   12. RESPONSIVE — collapse sidenotes inline on narrow screens
+   ========================================================================= */
+@media (max-width: 1080px) {
+  .sidenote {
+    float: none;
+    width: auto;
+    margin: .8em 0;
+    padding: 10px 14px;
+    background: var(--bg-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    display: block;
+  }
+}
+@media (max-width: 640px) {
+  :root { --text-size: 18px; }
+  article p { text-align: left; hyphens: none; }
+  .masthead { flex-wrap: wrap; }
+}
