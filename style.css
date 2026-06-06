@@ -1,15 +1,17 @@
 /* =========================================================================
-   Fiction Writing Curriculum — stylesheet
+   The Porch — a fiction writing curriculum
    -------------------------------------------------------------------------
-   Brief: Gwern.net's dense, literary typography & functionality (serif,
-   justified, indented paragraphs, sidenotes, dropcaps, smallcaps section
-   labels, boxed nav, monogram, dark mode) in Drawabox's warm cream +
-   red-orange palette. No cards, no badges, no "landing page" — an index.
+   Gwern.net's structure & functionality (asymmetric layout with a sticky
+   contents rail on the left + margin notes on the right, dense justified
+   indented prose, ornamental dropcap with a small-caps run-in, sidenotes,
+   hover link-popups, collapsible asides, link-type icons, typographic
+   ornaments, dark-by-default) in Drawabox's warm cream + red-orange palette.
 
-   Everything tweakable lives in :root below.
+   No drawn logos or graphics — ornaments are real typographic glyphs (⁂ ☞),
+   the way Gwern does it. Everything tweakable lives in :root.
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=UnifrakturCook:wght@700&display=swap');
 
 /* =========================================================================
    1. DESIGN TOKENS
@@ -18,40 +20,43 @@
   --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   --font-sans:  "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
   --font-mono:  "Source Code Pro", "SF Mono", Menlo, monospace;
+  --font-drop:  "UnifrakturCook", "Source Serif 4", serif;  /* ornamental initial */
 
   --text-size: 20px;
   --line-height: 1.6;
-  --measure: 660px;      /* reading column width */
-  --page-max: 1160px;    /* total incl. sidenote gutter */
+  --measure: 660px;      /* reading column */
+  --rail: 188px;         /* left contents rail */
+  --gutter: 224px;       /* right margin for sidenotes */
 
-  /* Drawabox warmth over Gwern structure */
+  /* Light (Drawabox paper) — available via the toggle */
   --bg:          #fbf8f3;
   --bg-raised:   #fffdf9;
   --text:        #1c1a17;
   --text-soft:   #6b655b;
   --rule:        #e1dacd;
   --rule-strong: #cabfad;
-
-  --accent:        #d8472b;  /* Drawabox red-orange */
+  --accent:        #d8472b;
   --accent-dark:   #b3361e;
   --accent-tint:   #f8ebe4;
-
   --link:        #1c1a17;
   --link-hover:  #d8472b;
+  --shadow: rgba(40,28,18,.16);
 }
 
+/* Dark — WARM near-black brown (not neutral gray). This is the default. */
 :root[data-theme="dark"] {
-  --bg:          #19120f;
+  --bg:          #181210;
   --bg-raised:   #221813;
   --text:        #ece4d8;
   --text-soft:   #a99e8d;
-  --rule:        #3a2c24;
+  --rule:        #382a22;
   --rule-strong: #503c31;
   --accent:        #f06a4d;
   --accent-dark:   #f8856b;
   --accent-tint:   #2e1d16;
   --link:        #ece4d8;
   --link-hover:  #f06a4d;
+  --shadow: rgba(0,0,0,.5);
 }
 
 /* =========================================================================
@@ -84,279 +89,237 @@ a {
 }
 a:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
 
+/* link-type icon: outbound links get a small ↗ (Gwern-style), scoped to prose */
+article a[href^="http"]::after,
+.toc-rail a[href^="http"]::after {
+  content: "\2197";
+  font-size: .62em; vertical-align: .35em;
+  margin-left: .12em; color: var(--accent);
+}
+
 /* =========================================================================
-   3. PAGE FRAME + MASTHEAD (monogram + boxed nav, Gwern-style)
+   3. MASTHEAD (text wordmark + boxed nav; no logo graphic)
    ========================================================================= */
-.page { max-width: var(--page-max); margin: 0 auto; padding: 0 24px; }
+.page { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 
 .masthead {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  padding: 26px 0 18px;
+  display: flex; align-items: center; gap: 22px;
+  padding: 26px 0 16px;
 }
-/* hand-drawn monogram sits left, like Gwern's blackletter G */
-.monogram { flex: 0 0 auto; width: 62px; height: 62px; color: var(--accent); }
-.monogram svg { width: 100%; height: 100%; display: block; }
-
 .masthead .wordmark {
   font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: .01em;
-  text-decoration: none;
-  color: var(--text);
-  margin-right: auto;
-  line-height: 1.05;
+  font-weight: 700; font-size: 1.5rem; letter-spacing: .005em;
+  text-decoration: none; color: var(--text); margin-right: auto; line-height: 1.04;
 }
 .masthead .wordmark .sub {
-  display: block;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: .62rem;
-  text-transform: uppercase;
-  letter-spacing: .22em;
-  color: var(--text-soft);
-  margin-top: 3px;
+  display: block; font-family: var(--font-sans); font-weight: 600;
+  font-size: .6rem; text-transform: uppercase; letter-spacing: .24em;
+  color: var(--text-soft); margin-top: 4px;
 }
-
-/* boxed uppercase nav, butted together like the reference */
 .topnav { display: flex; flex-wrap: wrap; }
-.topnav a {
-  font-family: var(--font-serif);
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  font-size: .72rem;
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid var(--rule-strong);
-  margin-left: -1px;          /* collapse shared borders */
-  padding: .55em .9em;
-  white-space: nowrap;
+.topnav a, .topnav button.theme-toggle {
+  font-family: var(--font-serif); text-transform: uppercase; letter-spacing: .12em;
+  font-size: .72rem; text-decoration: none; color: var(--text);
+  border: 1px solid var(--rule-strong); margin-left: -1px; padding: .55em .9em;
+  white-space: nowrap; background: transparent; cursor: pointer;
 }
-.topnav a:hover { color: #fff; background: var(--accent); border-color: var(--accent); position: relative; z-index: 1; }
-.topnav button.theme-toggle {
-  font: inherit;
-  font-family: var(--font-serif);
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  font-size: .72rem;
-  color: var(--text);
-  background: transparent;
-  border: 1px solid var(--rule-strong);
-  margin-left: -1px;
-  padding: .55em .9em;
-  cursor: pointer;
+.topnav a:hover, .topnav button.theme-toggle:hover {
+  color: #fff; background: var(--accent); border-color: var(--accent);
+  position: relative; z-index: 1;
 }
-.topnav button.theme-toggle:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
-
 .masthead-rule { border: 0; border-top: 2px solid var(--text); margin: 0 0 4px; }
 .masthead-rule.thin { border-top: 1px solid var(--rule); }
 
 /* =========================================================================
-   4. ARTICLE / READING COLUMN
+   4. THE ASYMMETRIC SHELL  (rail | text | margin)
    ========================================================================= */
-article {
-  max-width: var(--measure);
-  margin: 0 auto;
-  padding: 24px 0 70px;
-  counter-reset: sidenote;
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, var(--measure)) var(--gutter);
+  justify-content: center;
+  gap: 44px;
+  align-items: start;
 }
 
-/* Dense, justified, book-style indented paragraphs (no inter-para gaps) */
-article p {
-  text-align: justify;
-  hyphens: auto;
-  margin: 0;
-  text-indent: 1.5em;
+/* Left contents rail — sticky, quiet, small-caps */
+.toc-rail {
+  grid-column: 1;
+  position: sticky; top: 20px;
+  font-size: .8rem; line-height: 1.45;
+  padding-top: 30px;
 }
-article p + p { margin-top: 0; }
-/* first paragraph of a section & special paragraphs are flush-left */
+.toc-rail .rail-title {
+  font-variant: small-caps; letter-spacing: .07em; font-weight: 700;
+  color: var(--text-soft); border-bottom: 1px solid var(--rule);
+  padding-bottom: .3em; margin-bottom: .55em;
+}
+.toc-rail ol { list-style: none; margin: 0; padding: 0; }
+.toc-rail li { margin: .28em 0; display: flex; gap: .45em; align-items: baseline; }
+.toc-rail .rn { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 600; }
+.toc-rail a { text-decoration: none; color: var(--text-soft); }
+.toc-rail a:hover { color: var(--accent); }
+
+/* =========================================================================
+   5. ARTICLE / READING COLUMN
+   ========================================================================= */
+article { grid-column: 2; padding: 8px 0 64px; counter-reset: sidenote sec; }
+
+article p { text-align: justify; hyphens: auto; margin: 0; text-indent: 1.5em; }
 article > p:first-of-type,
 article h1 + p, article h2 + p, article h3 + p,
 p.lede, p.flush, .callout p, .label-lead { text-indent: 0; }
-/* a little air after special blocks */
-p.lede { margin-bottom: .4em; }
+p.lede { margin-bottom: .45em; }
 
 h1, h2, h3, h4 { font-family: var(--font-serif); line-height: 1.15; font-weight: 700; }
 h1 { font-size: 2.5rem; margin: .1em 0 .1em; letter-spacing: -0.015em; }
 h1 .subtitle {
-  display: block; font-size: 1.05rem; font-weight: 400; font-style: italic;
-  color: var(--text-soft); letter-spacing: 0; margin-top: .25em;
+  display: block; font-size: 1.02rem; font-weight: 400; font-style: italic;
+  color: var(--text-soft); letter-spacing: 0; margin-top: .3em;
 }
 
-/* SECTION HEAD: small-caps + hairline rule under it (the Gwern signature) */
+/* auto-numbered headings inside lessons (1, 2, 3 …) */
+article.lesson h2 { counter-increment: sec; }
+article.lesson h2::before {
+  content: counter(sec) "\2002"; color: var(--accent); font-weight: 700;
+}
+
+/* small-caps section head with a hairline rule */
 .section-head {
-  font-variant: small-caps;
-  letter-spacing: .03em;
-  font-size: 1.45rem;
-  margin: 2.2em 0 .2em;
-  padding-bottom: .15em;
-  border-bottom: 1px solid var(--text);
+  font-variant: small-caps; letter-spacing: .03em; font-size: 1.45rem;
+  margin: 2.2em 0 .2em; padding-bottom: .15em; border-bottom: 1px solid var(--text);
 }
-.section-head::after { content: ""; }
+h2:not(.section-head) { font-size: 1.4rem; margin: 1.9em 0 .35em; }
+h3 { font-size: 1.16rem; margin: 1.5em 0 .3em; }
 
-/* inline small-caps labels: NAVIGATION:  FEATURES:  HOW THIS WORKS: */
-.label-inline {
-  font-variant: small-caps;
-  letter-spacing: .05em;
-  font-weight: 600;
-  color: var(--accent);
-}
+/* inline small-caps labels (NAVIGATION:  FEATURES:) */
+.label-inline { font-variant: small-caps; letter-spacing: .05em; font-weight: 600; color: var(--accent); }
 .label-lead { margin: 1em 0 0; }
-
 .smallcaps { font-variant: small-caps; letter-spacing: .03em; }
 
-/* Dropcap */
+/* ornamental dropcap + small-caps run-in (the classic book opening) */
 p.lede::first-letter {
-  font-weight: 700;
-  float: left;
-  font-size: 3.5em;
-  line-height: .7;
-  padding: .04em .08em 0 0;
-  color: var(--accent);
+  font-family: var(--font-drop); font-weight: 700;
+  float: left; font-size: 4.4em; line-height: .66;
+  padding: .04em .09em 0 0; margin-right: .02em; color: var(--accent);
 }
+.runin { font-variant: small-caps; letter-spacing: .03em; }
 
 blockquote {
-  margin: 1.2em 0; padding: .1em 0 .1em 1.1em;
-  border-left: 3px solid var(--accent);
+  margin: 1.2em 0; padding: .1em 0 .1em 1.1em; border-left: 3px solid var(--accent);
   color: var(--text-soft); font-style: italic; text-indent: 0;
 }
 blockquote p { text-indent: 0; text-align: left; }
 
 code, pre { font-family: var(--font-mono); font-size: .85em; }
-pre {
-  background: var(--bg-raised); border: 1px solid var(--rule);
-  padding: 14px 16px; overflow-x: auto; text-indent: 0;
-}
+pre { background: var(--bg-raised); border: 1px solid var(--rule); padding: 14px 16px; overflow-x: auto; text-indent: 0; }
 hr { border: 0; border-top: 1px solid var(--rule); margin: 2em 0; }
 
+/* typographic ornament divider (asterism) — not a drawn graphic */
+.asterism { text-align: center; color: var(--accent); font-size: 1.05rem; letter-spacing: .5em; margin: 1.9em 0; text-indent: 0; }
+
 /* =========================================================================
-   5. SIDENOTES — Gwern's signature.  Usage:
-        text<sup class="sn-num"></sup><span class="sidenote">the note</span>
+   6. SIDENOTES (float into the right gutter)
    ========================================================================= */
 .sn-num { color: var(--accent); font-weight: 600; }
-.sn-num::before {
-  counter-increment: sidenote; content: counter(sidenote);
-  font-size: .7em; vertical-align: super;
-}
+.sn-num::before { counter-increment: sidenote; content: counter(sidenote); font-size: .7em; vertical-align: super; }
 .sidenote {
-  float: right; clear: right; width: 215px;
-  margin: .25em -255px .7em 0;
-  font-size: .8rem; line-height: 1.38; text-align: left;
-  text-indent: 0; color: var(--text-soft); hyphens: none;
+  float: right; clear: right; width: 200px;
+  margin: .25em calc(-1 * (var(--gutter) + 20px)) .7em 0;
+  font-size: .8rem; line-height: 1.38; text-align: left; text-indent: 0;
+  color: var(--text-soft); hyphens: none;
 }
-.sidenote::before { content: counter(sidenote) " "; color: var(--accent); font-weight: 600; }
+.sidenote::before { content: counter(sidenote) "\2002"; color: var(--accent); font-weight: 600; }
 
 /* =========================================================================
-   6. ORNAMENTS (hand-drawn SVG dividers / emblems — the "indie" signal)
+   7. COLLAPSIBLE ASIDE (native <details>, Gwern-style)
    ========================================================================= */
-.ornament { display: block; width: 120px; height: 24px; margin: 1.6em auto; color: var(--accent); opacity: .85; }
-.ornament svg { width: 100%; height: 100%; }
-
-.banner {
-  width: 100%; height: auto; display: block;
-  margin: .4em 0 1.4em; color: var(--accent);
-  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+details.aside { margin: 1.3em 0; border-left: 3px solid var(--rule-strong); padding: .15em 0 .15em 1em; text-indent: 0; }
+details.aside summary {
+  cursor: pointer; list-style: none; font-variant: small-caps; letter-spacing: .04em;
+  color: var(--accent); font-weight: 600;
 }
+details.aside summary::-webkit-details-marker { display: none; }
+details.aside summary::before { content: "\25B8\00A0"; }      /* ▸ */
+details.aside[open] summary::before { content: "\25BE\00A0"; } /* ▾ */
+details.aside p { text-indent: 0; margin-top: .4em; }
 
 /* =========================================================================
-   7. CURRICULUM INDEX (replaces the old cards entirely)
+   8. HOVER LINK-POPUPS (built by script.js)
    ========================================================================= */
-.unit-block { margin: 1.6em 0 1.9em; }
-.unit-head {
-  font-size: 1.18rem; font-weight: 700; margin: 0 0 .1em;
-  display: flex; align-items: baseline; gap: .55em;
+.lpop { text-decoration-style: dotted; }
+.popup {
+  position: absolute; z-index: 60; display: none; max-width: 300px;
+  background: var(--bg-raised); border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--accent); padding: 10px 13px;
+  font-size: .82rem; line-height: 1.42; color: var(--text);
+  box-shadow: 0 8px 28px var(--shadow);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity .12s ease, transform .12s ease; pointer-events: none;
 }
-.unit-tag {
-  font-variant: small-caps; letter-spacing: .06em;
-  font-size: .92rem; font-weight: 700; color: var(--accent);
-}
-.unit-note { color: var(--text-soft); font-style: italic; margin: 0 0 .5em !important; text-indent: 0 !important; font-size: .95rem; }
+.popup.show { opacity: 1; transform: none; pointer-events: auto; }
+.popup .pt { font-weight: 700; display: block; }
+.popup .ps { font-variant: small-caps; letter-spacing: .04em; color: var(--accent); font-size: .78rem; }
+.popup .pn { color: var(--text-soft); margin-top: 4px; display: block; }
+
+/* =========================================================================
+   9. CURRICULUM INDEX (homepage)
+   ========================================================================= */
+.unit-block { margin: 1.5em 0 1.8em; }
+.unit-head { font-size: 1.16rem; font-weight: 700; margin: 0 0 .1em; display: flex; align-items: baseline; gap: .55em; }
+.unit-tag { font-variant: small-caps; letter-spacing: .06em; font-size: .9rem; font-weight: 700; color: var(--accent); }
+.unit-note { color: var(--text-soft); font-style: italic; margin: 0 0 .5em !important; text-indent: 0 !important; font-size: .94rem; }
 
 .index-list { list-style: none; margin: 0; padding: 0; }
-.index-list li {
-  padding: .28em 0;
-  border-bottom: 1px dotted var(--rule);
-  display: flex; align-items: baseline; gap: .6em;
-}
+.index-list li { padding: .3em 0; border-bottom: 1px dotted var(--rule); display: flex; align-items: baseline; gap: .6em; }
 .index-list li:last-child { border-bottom: 0; }
-.index-list .lx {
-  font-variant-numeric: tabular-nums; color: var(--accent);
-  font-weight: 600; font-size: .85rem; min-width: 2.4em;
-}
+.index-list .lx { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; font-size: .85rem; min-width: 2.4em; }
 .index-list a { text-decoration: none; color: var(--text); font-weight: 600; }
 .index-list a:hover { color: var(--accent); }
 .index-list .ix-note { color: var(--text-soft); font-style: italic; font-size: .9rem; }
 .index-list .soon {
-  margin-left: auto; font-family: var(--font-sans); font-size: .62rem;
-  text-transform: uppercase; letter-spacing: .08em; color: var(--text-soft);
-  border: 1px solid var(--rule-strong); padding: 1px 6px; white-space: nowrap;
+  margin-left: auto; font-family: var(--font-sans); font-size: .62rem; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--text-soft); border: 1px solid var(--rule-strong); padding: 1px 6px; white-space: nowrap;
 }
 
 /* =========================================================================
-   8. CALLOUT / EXERCISE (kept for lessons, restyled to be flatter)
+   10. CALLOUT / EXERCISE
    ========================================================================= */
-.callout {
-  border-left: 3px solid var(--accent);
-  background: var(--accent-tint);
-  padding: 14px 18px; margin: 1.5em 0; text-indent: 0;
-}
-.callout .callout-label {
-  font-variant: small-caps; letter-spacing: .05em;
-  font-size: .95rem; font-weight: 700; color: var(--accent); margin-bottom: .25em;
-}
+.callout { border-left: 3px solid var(--accent); background: var(--accent-tint); padding: 14px 18px; margin: 1.5em 0; text-indent: 0; }
+.callout .callout-label { font-variant: small-caps; letter-spacing: .05em; font-size: .98rem; font-weight: 700; color: var(--accent); margin-bottom: .25em; }
+.callout .callout-label::before { content: "\261E\00A0"; }  /* ☞ manicule */
 .callout p { text-indent: 0; }
 .callout p:last-child { margin-bottom: 0; }
 
 /* =========================================================================
-   9. TABLE OF CONTENTS (lesson pages)
-   ========================================================================= */
-.toc { border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: 12px 0; margin: 1.4em 0 1.8em; text-indent: 0; }
-.toc .toc-title { font-variant: small-caps; letter-spacing: .05em; font-weight: 700; color: var(--text-soft); margin-bottom: .3em; font-size: .95rem; }
-.toc ol { margin: 0; padding-left: 1.4em; columns: 2; column-gap: 2em; }
-.toc li { margin: .15em 0; }
-.toc a { text-decoration: none; color: var(--text); }
-.toc a:hover { color: var(--accent); }
-
-/* =========================================================================
-   10. LESSON META + PAGER + FOOTER
+   11. LESSON META + PAGER + FOOTER
    ========================================================================= */
 .lesson-meta {
-  font-variant: small-caps; letter-spacing: .03em;
-  font-size: .9rem; color: var(--text-soft);
-  display: flex; gap: 18px; flex-wrap: wrap;
-  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  font-variant: small-caps; letter-spacing: .03em; font-size: .9rem; color: var(--text-soft);
+  display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
   padding: 8px 0; margin: .5em 0 1.4em; text-indent: 0;
 }
 .lesson-meta .accent { color: var(--accent); font-weight: 600; }
 
-.pager {
-  display: flex; justify-content: space-between; gap: 16px;
-  margin-top: 2.6em; padding-top: 1.2em; border-top: 1px solid var(--text);
-  font-size: .95rem; text-indent: 0;
-}
+.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 2.6em; padding-top: 1.2em; border-top: 1px solid var(--text); font-size: .95rem; text-indent: 0; }
 .pager a { text-decoration: none; color: var(--text-soft); max-width: 46%; }
 .pager a:hover { color: var(--accent); }
 .pager .dir { display: block; font-variant: small-caps; letter-spacing: .05em; font-size: .8rem; color: var(--accent); }
 .pager .next { text-align: right; margin-left: auto; }
 
-.site-footer {
-  border-top: 1px solid var(--rule); margin-top: 36px; padding: 22px 0 50px;
-  font-size: .85rem; color: var(--text-soft); text-indent: 0;
-}
+.site-footer { border-top: 1px solid var(--rule); margin-top: 32px; padding: 22px 0 50px; font-size: .85rem; color: var(--text-soft); text-indent: 0; }
 .site-footer p { text-indent: 0; text-align: left; }
 .site-footer a { color: var(--text-soft); }
 
 /* =========================================================================
-   11. RESPONSIVE
+   12. RESPONSIVE — collapse the rails on narrow screens
    ========================================================================= */
 @media (max-width: 1080px) {
+  .shell { display: block; max-width: var(--measure); margin: 0 auto; }
+  .toc-rail { position: static; padding-top: 0; margin-bottom: 1.4em; border: 1px solid var(--rule); padding: 12px 16px; }
+  article { padding-top: 0; }
   .sidenote {
-    float: none; width: auto; display: block;
-    margin: .7em 0; padding: 9px 13px;
-    background: var(--bg-raised);
-    border-left: 3px solid var(--accent); text-indent: 0;
+    float: none; width: auto; display: block; margin: .7em 0; padding: 9px 13px;
+    background: var(--bg-raised); border-left: 3px solid var(--accent); text-indent: 0;
   }
 }
 @media (max-width: 640px) {
@@ -364,5 +327,4 @@ hr { border: 0; border-top: 1px solid var(--rule); margin: 2em 0; }
   article p { text-align: left; hyphens: none; text-indent: 0; }
   article p + p { margin-top: .7em; }
   .masthead { flex-wrap: wrap; gap: 14px; }
-  .toc ol { columns: 1; }
 }
