@@ -1,14 +1,14 @@
 /* =========================================================================
    The Porch — a fiction writing curriculum
    -------------------------------------------------------------------------
-   Gwern.net's structure & functionality (asymmetric layout with a sticky
-   contents rail on the left + margin notes on the right, dense justified
-   indented prose, ornamental dropcap with a small-caps run-in, sidenotes,
-   hover link-popups, collapsible asides, link-type icons, typographic
-   ornaments, dark-by-default) in Drawabox's warm cream + red-orange palette.
+   "Colorful but Gwern": Gwern.net's structure & typography (asymmetric
+   layout, sticky contents rail, margin notes, dense justified indented
+   prose, dropcap, small-caps rubrics, metadata block, hover popups) in an
+   ILLUMINATED-MANUSCRIPT palette — a curated set of jewel-tone inks used
+   semantically (each unit gets its own colour), rubric-red headings, and a
+   gold dropcap. Colourful, but organised and bookish, not loud.
 
-   No drawn logos or graphics — ornaments are real typographic glyphs (⁂ ☞),
-   the way Gwern does it. Everything tweakable lives in :root.
+   All tokens live in :root.  Dark is the default; light is a full theme.
    ========================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=UnifrakturCook:wght@700&display=swap');
@@ -20,44 +20,66 @@
   --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   --font-sans:  "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
   --font-mono:  "Source Code Pro", "SF Mono", Menlo, monospace;
-  --font-drop:  "UnifrakturCook", "Source Serif 4", serif;  /* ornamental initial */
+  --font-drop:  "UnifrakturCook", "Source Serif 4", serif;
 
-  --text-size: 20px;
-  --line-height: 1.6;
-  --measure: 660px;      /* reading column */
-  --rail: 188px;         /* left contents rail */
-  --gutter: 224px;       /* right margin for sidenotes */
+  --text-size: 18px;        /* smaller & denser than before */
+  --line-height: 1.5;
+  --measure: 660px;
+  --rail: 188px;
+  --gutter: 220px;
 
-  /* Light (Drawabox paper) — available via the toggle */
-  --bg:          #fbf8f3;
-  --bg-raised:   #fffdf9;
-  --text:        #1c1a17;
-  --text-soft:   #6b655b;
-  --rule:        #e1dacd;
-  --rule-strong: #cabfad;
-  --accent:        #d8472b;
-  --accent-dark:   #b3361e;
-  --accent-tint:   #f8ebe4;
-  --link:        #1c1a17;
-  --link-hover:  #d8472b;
-  --shadow: rgba(40,28,18,.16);
+  /* LIGHT theme (warm ivory paper, manuscript inks) */
+  --bg:          #f6efe0;
+  --bg-raised:   #fffaf0;
+  --text:        #211d17;
+  --text-soft:   #6f6657;
+  --rule:        #e0d6c2;
+  --rule-strong: #cdbfa4;
+  --accent:      #b5402f;   /* rubric red — the primary ink */
+  --accent-dark: #8f2f22;
+  --accent-tint: #f4e3d4;
+
+  /* the jewel-tone unit inks */
+  --c-red:   #b5402f;
+  --c-blue:  #2f5c9e;
+  --c-gold:  #a9762a;
+  --c-green: #3f7a51;
+  --c-plum:  #7d4a86;
+
+  --link:        #211d17;
+  --link-hover:  #b5402f;
+  --shadow: rgba(60,40,20,.18);
 }
 
-/* Dark — WARM near-black brown (not neutral gray). This is the default. */
+/* DARK theme (default) — jewel tones glow on ink-black, like stained glass */
 :root[data-theme="dark"] {
-  --bg:          #181210;
-  --bg-raised:   #221813;
-  --text:        #ece4d8;
-  --text-soft:   #a99e8d;
-  --rule:        #382a22;
-  --rule-strong: #503c31;
-  --accent:        #f06a4d;
-  --accent-dark:   #f8856b;
-  --accent-tint:   #2e1d16;
-  --link:        #ece4d8;
-  --link-hover:  #f06a4d;
-  --shadow: rgba(0,0,0,.5);
+  --bg:          #17161b;
+  --bg-raised:   #201e26;
+  --text:        #e9e1d3;
+  --text-soft:   #a09788;
+  --rule:        #322e39;
+  --rule-strong: #4a4552;
+  --accent:      #e3705a;
+  --accent-dark: #ec8268;
+  --accent-tint: #261a18;
+
+  --c-red:   #e3705a;
+  --c-blue:  #7ba6e0;
+  --c-gold:  #d8a44e;
+  --c-green: #82bb8d;
+  --c-plum:  #c490cd;
+
+  --link:        #e9e1d3;
+  --link-hover:  #e3705a;
+  --shadow: rgba(0,0,0,.55);
 }
+
+/* per-unit colour helper: set --u, then everything inherits the unit ink */
+.u1 { --u: var(--c-red); }
+.u2 { --u: var(--c-blue); }
+.u3 { --u: var(--c-gold); }
+.u4 { --u: var(--c-green); }
+.u5 { --u: var(--c-plum); }
 
 /* =========================================================================
    2. BASE
@@ -66,264 +88,242 @@
 html { scroll-behavior: smooth; }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-serif);
-  font-size: var(--text-size);
-  line-height: var(--line-height);
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-serif); font-size: var(--text-size); line-height: var(--line-height);
   font-feature-settings: "kern", "liga", "onum";
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   transition: background-color .2s ease, color .2s ease;
 }
 ::selection { background: var(--accent); color: #fff; }
 
 a {
-  color: var(--link);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-  text-decoration-color: var(--rule-strong);
+  color: var(--link); text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 2px; text-decoration-color: var(--rule-strong);
   transition: color .12s ease, text-decoration-color .12s ease;
 }
 a:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
 
-/* link-type icon: outbound links get a small ↗ (Gwern-style), scoped to prose */
 article a[href^="http"]::after,
 .toc-rail a[href^="http"]::after {
-  content: "\2197";
-  font-size: .62em; vertical-align: .35em;
-  margin-left: .12em; color: var(--accent);
+  content: "\2197"; font-size: .62em; vertical-align: .35em; margin-left: .1em; color: var(--c-blue);
 }
 
 /* =========================================================================
-   3. MASTHEAD (text wordmark + boxed nav; no logo graphic)
+   3. MASTHEAD
    ========================================================================= */
 .page { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 
-.masthead {
-  display: flex; align-items: center; gap: 22px;
-  padding: 26px 0 16px;
-}
+.masthead { display: flex; align-items: center; gap: 22px; padding: 24px 0 14px; }
 .masthead .wordmark {
-  font-family: var(--font-serif);
-  font-weight: 700; font-size: 1.5rem; letter-spacing: .005em;
+  font-family: var(--font-serif); font-weight: 700; font-size: 1.45rem; letter-spacing: .005em;
   text-decoration: none; color: var(--text); margin-right: auto; line-height: 1.04;
 }
 .masthead .wordmark .sub {
-  display: block; font-family: var(--font-sans); font-weight: 600;
-  font-size: .6rem; text-transform: uppercase; letter-spacing: .24em;
-  color: var(--text-soft); margin-top: 4px;
+  display: block; font-family: var(--font-sans); font-weight: 600; font-size: .58rem;
+  text-transform: uppercase; letter-spacing: .24em; color: var(--accent); margin-top: 4px;
 }
 .topnav { display: flex; flex-wrap: wrap; }
 .topnav a, .topnav button.theme-toggle {
-  font-family: var(--font-serif); text-transform: uppercase; letter-spacing: .12em;
-  font-size: .72rem; text-decoration: none; color: var(--text);
-  border: 1px solid var(--rule-strong); margin-left: -1px; padding: .55em .9em;
-  white-space: nowrap; background: transparent; cursor: pointer;
+  font-family: var(--font-serif); text-transform: uppercase; letter-spacing: .12em; font-size: .68rem;
+  text-decoration: none; color: var(--text); border: 1px solid var(--rule-strong);
+  margin-left: -1px; padding: .5em .85em; white-space: nowrap; background: transparent; cursor: pointer;
 }
 .topnav a:hover, .topnav button.theme-toggle:hover {
-  color: #fff; background: var(--accent); border-color: var(--accent);
-  position: relative; z-index: 1;
+  color: var(--bg); background: var(--accent); border-color: var(--accent); position: relative; z-index: 1;
 }
-.masthead-rule { border: 0; border-top: 2px solid var(--text); margin: 0 0 4px; }
+.masthead-rule { border: 0; border-top: 2px solid var(--accent); margin: 0 0 4px; }
 .masthead-rule.thin { border-top: 1px solid var(--rule); }
 
 /* =========================================================================
-   4. THE ASYMMETRIC SHELL  (rail | text | margin)
+   4. ASYMMETRIC SHELL
    ========================================================================= */
 .shell {
-  display: grid;
-  grid-template-columns: var(--rail) minmax(0, var(--measure)) var(--gutter);
-  justify-content: center;
-  gap: 44px;
-  align-items: start;
+  display: grid; grid-template-columns: var(--rail) minmax(0, var(--measure)) var(--gutter);
+  justify-content: center; gap: 44px; align-items: start;
 }
 
-/* Left contents rail — sticky, quiet, small-caps */
-.toc-rail {
-  grid-column: 1;
-  position: sticky; top: 20px;
-  font-size: .8rem; line-height: 1.45;
-  padding-top: 30px;
-}
+.toc-rail { grid-column: 1; position: sticky; top: 20px; font-size: .78rem; line-height: 1.45; padding-top: 28px; }
 .toc-rail .rail-title {
-  font-variant: small-caps; letter-spacing: .07em; font-weight: 700;
-  color: var(--text-soft); border-bottom: 1px solid var(--rule);
-  padding-bottom: .3em; margin-bottom: .55em;
+  font-variant: small-caps; letter-spacing: .07em; font-weight: 700; color: var(--text-soft);
+  border-bottom: 1px solid var(--rule); padding-bottom: .3em; margin-bottom: .55em;
 }
 .toc-rail ol { list-style: none; margin: 0; padding: 0; }
-.toc-rail li { margin: .28em 0; display: flex; gap: .45em; align-items: baseline; }
-.toc-rail .rn { color: var(--accent); font-variant-numeric: tabular-nums; font-weight: 600; }
+.toc-rail li { margin: .3em 0; display: flex; gap: .5em; align-items: baseline; }
+.toc-rail .rn { color: var(--u, var(--accent)); font-variant-numeric: tabular-nums; font-weight: 700; min-width: 1.4em; }
 .toc-rail a { text-decoration: none; color: var(--text-soft); }
-.toc-rail a:hover { color: var(--accent); }
+.toc-rail a:hover { color: var(--u, var(--accent)); }
+.toc-rail a.cur { color: var(--u, var(--accent)); font-weight: 600; }
+.toc-rail a.cur::before { content: "\203A\00A0"; color: var(--u, var(--accent)); }
 
 /* =========================================================================
-   5. ARTICLE / READING COLUMN
+   5. ARTICLE
    ========================================================================= */
-article { grid-column: 2; padding: 8px 0 64px; counter-reset: sidenote sec; }
+article { grid-column: 2; padding: 6px 0 60px; counter-reset: sidenote sec; }
 
-article p { text-align: justify; hyphens: auto; margin: 0; text-indent: 1.5em; }
+article p { text-align: justify; hyphens: auto; margin: 0; text-indent: 1.4em; }
 article > p:first-of-type,
 article h1 + p, article h2 + p, article h3 + p,
 p.lede, p.flush, .callout p, .label-lead { text-indent: 0; }
-p.lede { margin-bottom: .45em; }
+p.lede { margin-bottom: .4em; }
 
-h1, h2, h3, h4 { font-family: var(--font-serif); line-height: 1.15; font-weight: 700; }
-h1 { font-size: 2.5rem; margin: .1em 0 .1em; letter-spacing: -0.015em; }
-h1 .subtitle {
-  display: block; font-size: 1.02rem; font-weight: 400; font-style: italic;
-  color: var(--text-soft); letter-spacing: 0; margin-top: .3em;
+h1, h2, h3, h4 { font-family: var(--font-serif); line-height: 1.15; }
+h1 { font-size: 2.3rem; font-weight: 700; margin: .1em 0 .1em; letter-spacing: -0.015em; }
+h1 .subtitle { display: block; font-size: .98rem; font-weight: 400; font-style: italic; color: var(--text-soft); letter-spacing: 0; margin-top: .3em; }
+
+/* lesson section headings: rubric-red small caps, auto-numbered */
+article.lesson h2 {
+  counter-increment: sec; font-variant: small-caps; letter-spacing: .02em;
+  font-weight: 600; font-size: 1.3rem; color: var(--accent); margin: 1.7em 0 .35em;
 }
+article.lesson h2::before { content: counter(sec) "\2002"; color: var(--c-gold); font-weight: 700; }
 
-/* auto-numbered headings inside lessons (1, 2, 3 …) */
-article.lesson h2 { counter-increment: sec; }
-article.lesson h2::before {
-  content: counter(sec) "\2002"; color: var(--accent); font-weight: 700;
-}
-
-/* small-caps section head with a hairline rule */
 .section-head {
-  font-variant: small-caps; letter-spacing: .03em; font-size: 1.45rem;
-  margin: 2.2em 0 .2em; padding-bottom: .15em; border-bottom: 1px solid var(--text);
+  font-variant: small-caps; letter-spacing: .03em; font-size: 1.4rem; font-weight: 700; color: var(--accent);
+  margin: 2em 0 .2em; padding-bottom: .15em; border-bottom: 1px solid var(--accent);
 }
-h2:not(.section-head) { font-size: 1.4rem; margin: 1.9em 0 .35em; }
-h3 { font-size: 1.16rem; margin: 1.5em 0 .3em; }
+h2:not(.section-head):not(article.lesson h2) { font-size: 1.35rem; font-weight: 700; margin: 1.8em 0 .35em; }
+h3 { font-size: 1.12rem; font-weight: 700; margin: 1.4em 0 .3em; }
 
-/* inline small-caps labels (NAVIGATION:  FEATURES:) */
+/* § self-link anchors on headings (added by script.js) */
+.anchor { margin-left: .35em; font-size: .68em; color: var(--c-gold); text-decoration: none; opacity: 0; transition: opacity .12s; }
+h2:hover .anchor, h3:hover .anchor { opacity: .8; }
+
 .label-inline { font-variant: small-caps; letter-spacing: .05em; font-weight: 600; color: var(--accent); }
 .label-lead { margin: 1em 0 0; }
 .smallcaps { font-variant: small-caps; letter-spacing: .03em; }
 
-/* ornamental dropcap + small-caps run-in (the classic book opening) */
+/* illuminated gold dropcap + small-caps run-in */
 p.lede::first-letter {
-  font-family: var(--font-drop); font-weight: 700;
-  float: left; font-size: 4.4em; line-height: .66;
-  padding: .04em .09em 0 0; margin-right: .02em; color: var(--accent);
+  font-family: var(--font-drop); font-weight: 700; float: left; font-size: 4em; line-height: .66;
+  padding: .04em .09em 0 0; margin-right: .02em; color: var(--c-gold);
 }
 .runin { font-variant: small-caps; letter-spacing: .03em; }
 
-blockquote {
-  margin: 1.2em 0; padding: .1em 0 .1em 1.1em; border-left: 3px solid var(--accent);
-  color: var(--text-soft); font-style: italic; text-indent: 0;
-}
+blockquote { margin: 1.2em 0; padding: .1em 0 .1em 1.1em; border-left: 3px solid var(--c-gold); color: var(--text-soft); font-style: italic; text-indent: 0; }
 blockquote p { text-indent: 0; text-align: left; }
 
 code, pre { font-family: var(--font-mono); font-size: .85em; }
 pre { background: var(--bg-raised); border: 1px solid var(--rule); padding: 14px 16px; overflow-x: auto; text-indent: 0; }
-hr { border: 0; border-top: 1px solid var(--rule); margin: 2em 0; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.8em 0; }
 
-/* typographic ornament divider (asterism) — not a drawn graphic */
-.asterism { text-align: center; color: var(--accent); font-size: 1.05rem; letter-spacing: .5em; margin: 1.9em 0; text-indent: 0; }
+.asterism { text-align: center; color: var(--c-gold); font-size: 1.05rem; letter-spacing: .5em; margin: 1.8em 0; text-indent: 0; }
 
 /* =========================================================================
-   6. SIDENOTES (float into the right gutter)
+   6. DOCUMENT METADATA + EPISTEMIC STATUS (the Gwern authorial signature)
+   ========================================================================= */
+.docmeta { font-family: var(--font-sans); font-size: .76rem; color: var(--text-soft); text-indent: 0; margin: .2em 0 1.2em; }
+.docmeta .row { display: flex; flex-wrap: wrap; gap: .2em .9em; align-items: baseline; }
+.docmeta .row b { color: var(--text); font-weight: 600; }
+.docmeta .sep { color: var(--rule-strong); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .55em; }
+.tag {
+  font-family: var(--font-sans); font-size: .64rem; text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px 8px; border: 1px solid var(--tc, var(--rule-strong)); color: var(--tc, var(--text-soft));
+  border-radius: 2px; text-decoration: none;
+}
+.tag:hover { background: var(--tc, var(--accent)); color: var(--bg); }
+.tag.t-red { --tc: var(--c-red); } .tag.t-blue { --tc: var(--c-blue); }
+.tag.t-gold { --tc: var(--c-gold); } .tag.t-green { --tc: var(--c-green); } .tag.t-plum { --tc: var(--c-plum); }
+
+.epistemic {
+  font-family: var(--font-sans); font-size: .76rem; line-height: 1.45; color: var(--text-soft);
+  border-left: 3px solid var(--c-gold); background: var(--accent-tint);
+  padding: 8px 12px; margin: .9em 0 1.3em; text-indent: 0;
+}
+.epistemic b { color: var(--accent); font-variant: small-caps; letter-spacing: .03em; }
+
+/* =========================================================================
+   7. SIDENOTES
    ========================================================================= */
 .sn-num { color: var(--accent); font-weight: 600; }
 .sn-num::before { counter-increment: sidenote; content: counter(sidenote); font-size: .7em; vertical-align: super; }
 .sidenote {
-  float: right; clear: right; width: 200px;
-  margin: .25em calc(-1 * (var(--gutter) + 20px)) .7em 0;
-  font-size: .8rem; line-height: 1.38; text-align: left; text-indent: 0;
-  color: var(--text-soft); hyphens: none;
+  float: right; clear: right; width: 200px; margin: .25em calc(-1 * (var(--gutter) + 20px)) .7em 0;
+  font-size: .76rem; line-height: 1.4; text-align: left; text-indent: 0; color: var(--text-soft); hyphens: none;
 }
 .sidenote::before { content: counter(sidenote) "\2002"; color: var(--accent); font-weight: 600; }
 
 /* =========================================================================
-   7. COLLAPSIBLE ASIDE (native <details>, Gwern-style)
+   8. COLLAPSIBLE ASIDE
    ========================================================================= */
-details.aside { margin: 1.3em 0; border-left: 3px solid var(--rule-strong); padding: .15em 0 .15em 1em; text-indent: 0; }
-details.aside summary {
-  cursor: pointer; list-style: none; font-variant: small-caps; letter-spacing: .04em;
-  color: var(--accent); font-weight: 600;
-}
+details.aside { margin: 1.3em 0; border-left: 3px solid var(--c-blue); padding: .15em 0 .15em 1em; text-indent: 0; }
+details.aside summary { cursor: pointer; list-style: none; font-variant: small-caps; letter-spacing: .04em; color: var(--c-blue); font-weight: 600; }
 details.aside summary::-webkit-details-marker { display: none; }
-details.aside summary::before { content: "\25B8\00A0"; }      /* ▸ */
-details.aside[open] summary::before { content: "\25BE\00A0"; } /* ▾ */
+details.aside summary::before { content: "\25B8\00A0"; }
+details.aside[open] summary::before { content: "\25BE\00A0"; }
 details.aside p { text-indent: 0; margin-top: .4em; }
 
 /* =========================================================================
-   8. HOVER LINK-POPUPS (built by script.js)
+   9. HOVER LINK-POPUPS
    ========================================================================= */
 .lpop { text-decoration-style: dotted; }
 .popup {
-  position: absolute; z-index: 60; display: none; max-width: 300px;
-  background: var(--bg-raised); border: 1px solid var(--rule-strong);
-  border-left: 3px solid var(--accent); padding: 10px 13px;
-  font-size: .82rem; line-height: 1.42; color: var(--text);
-  box-shadow: 0 8px 28px var(--shadow);
-  opacity: 0; transform: translateY(4px);
-  transition: opacity .12s ease, transform .12s ease; pointer-events: none;
+  position: absolute; z-index: 60; display: none; max-width: 300px; background: var(--bg-raised);
+  border: 1px solid var(--rule-strong); border-left: 3px solid var(--accent); padding: 10px 13px;
+  font-size: .8rem; line-height: 1.42; color: var(--text); box-shadow: 0 8px 28px var(--shadow);
+  opacity: 0; transform: translateY(4px); transition: opacity .12s ease, transform .12s ease; pointer-events: none;
 }
 .popup.show { opacity: 1; transform: none; pointer-events: auto; }
 .popup .pt { font-weight: 700; display: block; }
-.popup .ps { font-variant: small-caps; letter-spacing: .04em; color: var(--accent); font-size: .78rem; }
+.popup .ps { font-variant: small-caps; letter-spacing: .04em; color: var(--accent); font-size: .76rem; }
 .popup .pn { color: var(--text-soft); margin-top: 4px; display: block; }
 
 /* =========================================================================
-   9. CURRICULUM INDEX (homepage)
+   10. CURRICULUM INDEX (per-unit colour)
    ========================================================================= */
-.unit-block { margin: 1.5em 0 1.8em; }
-.unit-head { font-size: 1.16rem; font-weight: 700; margin: 0 0 .1em; display: flex; align-items: baseline; gap: .55em; }
-.unit-tag { font-variant: small-caps; letter-spacing: .06em; font-size: .9rem; font-weight: 700; color: var(--accent); }
-.unit-note { color: var(--text-soft); font-style: italic; margin: 0 0 .5em !important; text-indent: 0 !important; font-size: .94rem; }
+.unit-block { margin: 1.4em 0 1.7em; border-left: 3px solid var(--u, var(--accent)); padding-left: 15px; }
+.unit-head { font-size: 1.14rem; font-weight: 700; margin: 0 0 .1em; display: flex; align-items: baseline; gap: .55em; }
+.unit-tag { font-variant: small-caps; letter-spacing: .06em; font-size: .88rem; font-weight: 700; color: var(--u, var(--accent)); }
+.unit-note { color: var(--text-soft); font-style: italic; margin: 0 0 .5em !important; text-indent: 0 !important; font-size: .92rem; }
 
 .index-list { list-style: none; margin: 0; padding: 0; }
 .index-list li { padding: .3em 0; border-bottom: 1px dotted var(--rule); display: flex; align-items: baseline; gap: .6em; }
 .index-list li:last-child { border-bottom: 0; }
-.index-list .lx { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; font-size: .85rem; min-width: 2.4em; }
+.index-list .lx { font-variant-numeric: tabular-nums; color: var(--u, var(--accent)); font-weight: 700; font-size: .82rem; min-width: 2.4em; }
 .index-list a { text-decoration: none; color: var(--text); font-weight: 600; }
-.index-list a:hover { color: var(--accent); }
-.index-list .ix-note { color: var(--text-soft); font-style: italic; font-size: .9rem; }
+.index-list a:hover { color: var(--u, var(--accent)); }
+.index-list .ix-note { color: var(--text-soft); font-style: italic; font-size: .88rem; }
 .index-list .soon {
-  margin-left: auto; font-family: var(--font-sans); font-size: .62rem; text-transform: uppercase;
+  margin-left: auto; font-family: var(--font-sans); font-size: .6rem; text-transform: uppercase;
   letter-spacing: .08em; color: var(--text-soft); border: 1px solid var(--rule-strong); padding: 1px 6px; white-space: nowrap;
 }
 
 /* =========================================================================
-   10. CALLOUT / EXERCISE
+   11. CALLOUT / EXERCISE
    ========================================================================= */
-.callout { border-left: 3px solid var(--accent); background: var(--accent-tint); padding: 14px 18px; margin: 1.5em 0; text-indent: 0; }
-.callout .callout-label { font-variant: small-caps; letter-spacing: .05em; font-size: .98rem; font-weight: 700; color: var(--accent); margin-bottom: .25em; }
-.callout .callout-label::before { content: "\261E\00A0"; }  /* ☞ manicule */
+.callout { border-left: 3px solid var(--c-green); background: var(--bg-raised); padding: 13px 17px; margin: 1.4em 0; text-indent: 0; }
+.callout .callout-label { font-variant: small-caps; letter-spacing: .05em; font-size: .95rem; font-weight: 700; color: var(--c-green); margin-bottom: .25em; }
+.callout .callout-label::before { content: "\261E\00A0"; }
+.callout.exercise { border-left-color: var(--accent); background: var(--accent-tint); }
+.callout.exercise .callout-label { color: var(--accent); }
 .callout p { text-indent: 0; }
 .callout p:last-child { margin-bottom: 0; }
 
 /* =========================================================================
-   11. LESSON META + PAGER + FOOTER
+   12. PAGER + FOOTER
    ========================================================================= */
-.lesson-meta {
-  font-variant: small-caps; letter-spacing: .03em; font-size: .9rem; color: var(--text-soft);
-  display: flex; gap: 18px; flex-wrap: wrap; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-  padding: 8px 0; margin: .5em 0 1.4em; text-indent: 0;
-}
-.lesson-meta .accent { color: var(--accent); font-weight: 600; }
-
-.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 2.6em; padding-top: 1.2em; border-top: 1px solid var(--text); font-size: .95rem; text-indent: 0; }
+.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 2.4em; padding-top: 1.1em; border-top: 1px solid var(--accent); font-size: .92rem; text-indent: 0; }
 .pager a { text-decoration: none; color: var(--text-soft); max-width: 46%; }
 .pager a:hover { color: var(--accent); }
-.pager .dir { display: block; font-variant: small-caps; letter-spacing: .05em; font-size: .8rem; color: var(--accent); }
+.pager .dir { display: block; font-variant: small-caps; letter-spacing: .05em; font-size: .78rem; color: var(--accent); }
 .pager .next { text-align: right; margin-left: auto; }
 
-.site-footer { border-top: 1px solid var(--rule); margin-top: 32px; padding: 22px 0 50px; font-size: .85rem; color: var(--text-soft); text-indent: 0; }
-.site-footer p { text-indent: 0; text-align: left; }
+.site-footer { border-top: 1px solid var(--rule); margin-top: 30px; padding: 20px 0 50px; font-size: .82rem; color: var(--text-soft); text-indent: 0; }
+.site-footer p { text-indent: 0; text-align: left; margin: .3em 0; }
 .site-footer a { color: var(--text-soft); }
 
 /* =========================================================================
-   12. RESPONSIVE — collapse the rails on narrow screens
+   13. RESPONSIVE
    ========================================================================= */
 @media (max-width: 1080px) {
   .shell { display: block; max-width: var(--measure); margin: 0 auto; }
-  .toc-rail { position: static; padding-top: 0; margin-bottom: 1.4em; border: 1px solid var(--rule); padding: 12px 16px; }
+  .toc-rail { position: static; padding: 12px 16px; margin-bottom: 1.3em; border: 1px solid var(--rule); }
   article { padding-top: 0; }
-  .sidenote {
-    float: none; width: auto; display: block; margin: .7em 0; padding: 9px 13px;
-    background: var(--bg-raised); border-left: 3px solid var(--accent); text-indent: 0;
-  }
+  .sidenote { float: none; width: auto; display: block; margin: .7em 0; padding: 9px 13px; background: var(--bg-raised); border-left: 3px solid var(--accent); text-indent: 0; }
 }
 @media (max-width: 640px) {
-  :root { --text-size: 18px; }
+  :root { --text-size: 17px; }
   article p { text-align: left; hyphens: none; text-indent: 0; }
   article p + p { margin-top: .7em; }
   .masthead { flex-wrap: wrap; gap: 14px; }
