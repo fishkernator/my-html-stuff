@@ -67,7 +67,7 @@
   });
 
   /* ---- 4. Scrollspy: highlight the current section in the rail -------- */
-  var rail = document.querySelector('.toc-rail');
+  var rail = document.querySelector('.sidenav');
   if (rail && 'IntersectionObserver' in window) {
     var links = {};
     rail.querySelectorAll('a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });

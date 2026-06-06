@@ -8,36 +8,52 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page">
 
-    <header class="masthead">
-      <a class="wordmark" href="index.html">The Porch<span class="sub">Fiction, from the ground up</span></a>
-      <nav class="topnav">
-        <a href="index.html">Index</a>
-        <a href="lesson-1-1.html">Start</a>
-        <a href="index.html#curriculum">Lessons</a>
-        <a href="index.html#about">About</a>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark</button>
+  <div class="announce">A free, handmade fiction-writing curriculum · no accounts · no paywalls · no ads</div>
+
+  <header class="topbar">
+    <a class="logo" href="index.html">The Porch</a>
+    <nav class="mainnav">
+      <a href="index.html">Lessons</a>
+      <a href="index.html#curriculum">Curriculum</a>
+      <a href="index.html#about">About</a>
+    </nav>
+    <div class="actions">
+      <a class="cta" href="lesson-1-1.html">Start here</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- LEFT COURSE-NAV SIDEBAR ----------------------------------------->
+    <aside class="sidebar">
+      <nav class="sidenav">
+        <div class="nav-group u1">
+          <div class="nav-title">In this lesson</div>
+          <ul>
+            <li><span class="lxn">1</span><a href="#why">Why detail is the foundation</a></li>
+            <li><span class="lxn">2</span><a href="#abstract">The trap of the abstract</a></li>
+            <li><span class="lxn">3</span><a href="#specific">Specific beats vivid</a></li>
+            <li><span class="lxn">4</span><a href="#exercise">Exercise: ten concrete things</a></li>
+          </ul>
+        </div>
+        <div class="nav-group u1">
+          <div class="nav-title"><a href="index.html#unit-1">Unit I · The Sentence</a></div>
+          <ul>
+            <li><span class="lxn">1.1</span><a href="lesson-1-1.html">So You Want To Be One Of The Greats</a></li>
+            <li><span class="lxn">1.2</span><a href="lesson-1-1.html">Tennis, Trigonometry, Tornadoes</a></li>
+            <li><span class="lxn">1.3</span><a href="lesson-1-1.html">Where The Money Is</a></li>
+          </ul>
+        </div>
+        <div class="nav-group">
+          <div class="nav-title"><a href="index.html">← All units</a></div>
+        </div>
       </nav>
-    </header>
-    <hr class="masthead-rule">
-    <hr class="masthead-rule thin">
+    </aside>
 
-    <div class="shell">
-
-      <!-- LEFT CONTENTS RAIL (sticky, auto-feel numbering) --------------->
-      <aside class="toc-rail">
-        <div class="rail-title">In this lesson</div>
-        <ol>
-          <li><span class="rn">1</span><a href="#why">Why detail is the foundation</a></li>
-          <li><span class="rn">2</span><a href="#abstract">The trap of the abstract</a></li>
-          <li><span class="rn">3</span><a href="#specific">Specific beats vivid</a></li>
-          <li><span class="rn">4</span><a href="#exercise">Exercise: ten concrete things</a></li>
-          <li><span class="rn">·</span><a href="index.html">Back to index</a></li>
-        </ol>
-      </aside>
-
-      <!-- CENTER COLUMN -------------------------------------------------->
+    <!-- PAPER CONTENT PANEL --------------------------------------------->
+    <main class="content">
       <article class="lesson">
         <p class="flush"><span class="label-inline">Unit&nbsp;I · The Sentence — Lesson 1.1</span></p>
         <h1>So You Want To Be One Of The Greats<span class="subtitle">On concrete detail, and the unglamorous foundation of every vivid sentence ever written.</span></h1>
@@ -156,22 +172,23 @@
             Curriculum index
           </a>
           <a class="next lpop" href="lesson-1-1.html"
-             data-title="1.2 · Tennis, Trigonometry, Tornadoes"
-             data-status="Draft"
-             data-note="Rhythm, cadence, and the music of varying your sentence length.">
+             data-title="1.2 · Tennis, Trigonometry, Tornadoes" data-status="Draft"
+             data-note="Rhythm, cadence, and the music of varying sentence length.">
             <span class="dir">Next →</span>
             1.2 · Tennis, Trigonometry, Tornadoes
           </a>
         </nav>
 
       </article>
-    </div>
-
-    <footer class="site-footer">
-      <p><strong>The Porch</strong> — Unit I, Lesson 1.1. <a href="index.html">Return to the index.</a></p>
-    </footer>
-
+    </main>
   </div>
+
+  <footer class="footbar">
+    <div class="inner">
+      <p><strong>The Porch</strong> — Unit I, Lesson 1.1. <a href="index.html">Return to the index.</a></p>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

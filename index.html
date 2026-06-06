@@ -8,37 +8,70 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page">
 
-    <header class="masthead">
-      <a class="wordmark" href="index.html">The Porch<span class="sub">Fiction, from the ground up</span></a>
-      <nav class="topnav">
-        <a href="index.html">Index</a>
-        <a href="lesson-1-1.html">Start</a>
-        <a href="#curriculum">Lessons</a>
-        <a href="#about">About</a>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark</button>
+  <div class="announce">A free, handmade fiction-writing curriculum · no accounts · no paywalls · no ads</div>
+
+  <header class="topbar">
+    <a class="logo" href="index.html">The Porch</a>
+    <nav class="mainnav">
+      <a href="index.html">Lessons</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="actions">
+      <a class="cta" href="lesson-1-1.html">Start here</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- LEFT COURSE-NAV SIDEBAR (Drawabox construction) ------------------>
+    <aside class="sidebar">
+      <nav class="sidenav">
+        <div class="nav-group u1">
+          <div class="nav-title"><a href="#unit-1">Unit I · The Sentence</a></div>
+          <ul>
+            <li><span class="lxn">1.1</span><a class="lpop" href="lesson-1-1.html" data-title="1.1 · So You Want To Be One Of The Greats" data-status="Ready to read" data-note="Concrete, specific detail — the foundation every vivid sentence is built on.">So You Want To Be One Of The Greats</a></li>
+            <li><span class="lxn">1.2</span><a class="lpop" href="lesson-1-1.html" data-title="1.2 · Tennis, Trigonometry, Tornadoes" data-status="Draft" data-note="Rhythm, cadence, and the music of varying sentence length.">Tennis, Trigonometry, Tornadoes</a></li>
+            <li><span class="lxn">1.3</span><a class="lpop" href="lesson-1-1.html" data-title="1.3 · Where The Money Is" data-status="Outlined" data-note="Verbs carry the energy of a sentence.">Where The Money Is</a></li>
+          </ul>
+        </div>
+        <div class="nav-group u2">
+          <div class="nav-title"><a href="#unit-2">Unit II · The Scene</a></div>
+          <ul>
+            <li><span class="lxn">2.1</span><a href="lesson-1-1.html">You Are Here</a></li>
+            <li><span class="lxn">2.2</span><a href="lesson-1-1.html">People Talking Is Not Conversation</a></li>
+          </ul>
+        </div>
+        <div class="nav-group u3">
+          <div class="nav-title"><a href="#unit-3">Unit III · Character</a></div>
+          <ul>
+            <li><span class="lxn">3.1</span><a href="lesson-1-1.html">Everybody Wants Something</a></li>
+            <li><span class="lxn">3.2</span><a href="lesson-1-1.html">The Lie They Tell Themselves</a></li>
+          </ul>
+        </div>
+        <div class="nav-group u4">
+          <div class="nav-title"><a href="#unit-4">Unit IV · Plot &amp; Structure</a></div>
+          <ul>
+            <li><span class="lxn">4.1</span><a href="lesson-1-1.html">And Then, Therefore, But</a></li>
+            <li><span class="lxn">4.2</span><a href="lesson-1-1.html">Make It Worse</a></li>
+          </ul>
+        </div>
+        <div class="nav-group u5">
+          <div class="nav-title"><a href="#unit-5">Unit V · Revision</a></div>
+          <ul>
+            <li><span class="lxn">5.1</span><a href="lesson-1-1.html">Kill Your Darlings, Bury The Bodies</a></li>
+          </ul>
+        </div>
+        <div class="nav-group">
+          <div class="nav-title"><a href="#about">About</a></div>
+        </div>
       </nav>
-    </header>
-    <hr class="masthead-rule">
-    <hr class="masthead-rule thin">
+    </aside>
 
-    <div class="shell">
-
-      <!-- LEFT CONTENTS RAIL (sticky) ----------------------------------->
-      <aside class="toc-rail">
-        <div class="rail-title">Contents</div>
-        <ol>
-          <li class="u1"><span class="rn">I</span><a href="#unit-1">The Sentence</a></li>
-          <li class="u2"><span class="rn">II</span><a href="#unit-2">The Scene</a></li>
-          <li class="u3"><span class="rn">III</span><a href="#unit-3">Character</a></li>
-          <li class="u4"><span class="rn">IV</span><a href="#unit-4">Plot &amp; Structure</a></li>
-          <li class="u5"><span class="rn">V</span><a href="#unit-5">Revision</a></li>
-          <li><span class="rn">·</span><a href="#about">About</a></li>
-        </ol>
-      </aside>
-
-      <!-- CENTER COLUMN -------------------------------------------------->
+    <!-- PAPER CONTENT PANEL --------------------------------------------->
+    <main class="content">
       <article>
 
         <p class="lede"><span class="runin">This is a free,</span> self-directed
@@ -52,101 +85,101 @@
           refuses to let you draw a face until you can draw a believable box. We
           start with the sentence.</span></p>
 
-        <p class="flush"><span class="label-inline">How this works:</span> the
-          lessons below run in sequence, from the smallest unit of fiction (the
-          sentence) up to the largest (a finished story). Each one explains a
-          single idea, shows it working, and ends with an exercise you actually
-          do. Reading about writing is not writing; the reps are the whole
-          point.<sup class="sn-num"></sup><span class="sidenote">Keep everything
-          you write. Lessons later in the course deliberately send you back to
-          dig up things you made early on.</span></p>
+        <p class="flush"><span class="label-inline l-blue">How this works:</span>
+          the lessons in the sidebar run in sequence, from the smallest unit of
+          fiction (the sentence) up to the largest (a finished story). Each one
+          explains a single idea, shows it working, and ends with an exercise you
+          actually do. Reading about writing is not writing; the reps are the
+          whole point.<sup class="sn-num"></sup><span class="sidenote">Keep
+          everything you write. Lessons later in the course deliberately send you
+          back to dig up things you made early on.</span></p>
 
-        <p><span class="label-inline">Features:</span> this site has a
-          <strong>dark mode</strong> by default (toggle it top-right), wide
-          margins that hold <em>sidenotes</em> like the one to your right instead
-          of footnotes you have to hunt for, hover-preview popups on the lesson
-          links below, and absolutely no accounts, tracking, paywalls, or popups
-          begging for your email. It is, proudly, a small handmade thing.</p>
+        <p><span class="label-inline l-green">Features:</span> this site has a
+          <strong>dark mode</strong> by default, footnotes that open as hover
+          popups, collapsible asides, and a sidebar that tracks where you are.
+          No accounts, tracking, paywalls, or popups begging for your email. It
+          is, proudly, a small handmade thing.</p>
 
         <details class="aside">
           <summary>Why model a writing course on a drawing course?</summary>
           <p>Because drawing pedagogy solved a problem writing pedagogy mostly
             hasn't: it broke an intimidating creative act into a ladder of
             concrete, gradeable skills you can practice in isolation. Most
-            writing advice skips straight to "find your voice." We're going to
-            build the ladder first.</p>
+            writing advice skips straight to "find your voice." We build the
+            ladder first.</p>
         </details>
 
-        <p class="asterism">⁂</p>
+        <p class="asterism">❧</p>
 
-        <h2 class="section-head" id="curriculum">The Curriculum</h2>
+        <h2 class="barhead section-head" id="curriculum">The Curriculum</h2>
 
         <div class="unit-block u1" id="unit-1">
-          <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;I</span> The Sentence</h3>
+          <h3 class="barhead unit-head"><span>Unit I · The Sentence</span></h3>
           <p class="unit-note">The atom of fiction. Control this and everything stacked on top of it gets easier.</p>
           <ul class="index-list">
-            <li><span class="lx">1.1</span><a class="lpop" href="lesson-1-1.html" data-title="1.1 · So You Want To Be One Of The Greats" data-status="Ready to read" data-note="Concrete, specific detail — why it's the foundation every vivid sentence is built on.">So You Want To Be One Of The Greats</a><span class="ix-note">— concrete detail, and why it beats everything</span></li>
-            <li><span class="lx">1.2</span><a class="lpop" href="lesson-1-1.html" data-title="1.2 · Tennis, Trigonometry, Tornadoes" data-status="Draft" data-note="Rhythm, cadence, and the music of varying your sentence length.">Tennis, Trigonometry, Tornadoes</a><span class="ix-note">— rhythm, and the music of sentence length</span><span class="soon">Draft</span></li>
-            <li><span class="lx">1.3</span><a class="lpop" href="lesson-1-1.html" data-title="1.3 · Where The Money Is" data-status="Outlined" data-note="Verbs carry the energy of a sentence. Make them do the heavy lifting.">Where The Money Is</a><span class="ix-note">— verbs do the heavy lifting</span><span class="soon">Soon</span></li>
+            <li><span class="lx">1.1</span><a class="lpop" href="lesson-1-1.html" data-title="1.1 · So You Want To Be One Of The Greats" data-status="Ready to read" data-note="Concrete, specific detail — the foundation every vivid sentence is built on.">So You Want To Be One Of The Greats</a><span class="ix-note">— concrete detail, and why it beats everything</span></li>
+            <li><span class="lx">1.2</span><a class="lpop" href="lesson-1-1.html" data-title="1.2 · Tennis, Trigonometry, Tornadoes" data-status="Draft" data-note="Rhythm, cadence, and the music of varying sentence length.">Tennis, Trigonometry, Tornadoes</a><span class="ix-note">— rhythm, and the music of sentence length</span><span class="soon">Draft</span></li>
+            <li><span class="lx">1.3</span><a class="lpop" href="lesson-1-1.html" data-title="1.3 · Where The Money Is" data-status="Outlined" data-note="Verbs carry the energy of a sentence.">Where The Money Is</a><span class="ix-note">— verbs do the heavy lifting</span><span class="soon">Soon</span></li>
           </ul>
         </div>
 
         <div class="unit-block u2" id="unit-2">
-          <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;II</span> The Scene</h3>
+          <h3 class="barhead unit-head"><span>Unit II · The Scene</span></h3>
           <p class="unit-note">Turning sentences into a continuous moment a reader can stand inside.</p>
           <ul class="index-list">
-            <li><span class="lx">2.1</span><a class="lpop" href="lesson-1-1.html" data-title="2.1 · You Are Here" data-status="Outlined" data-note="Grounding a scene in a specific place and time so the reader knows where they're standing.">You Are Here</a><span class="ix-note">— grounding a scene in space and time</span><span class="soon">Soon</span></li>
-            <li><span class="lx">2.2</span><a class="lpop" href="lesson-1-1.html" data-title="2.2 · People Talking Is Not Conversation" data-status="Outlined" data-note="Dialogue as action and pressure — not a transcript of two people being polite.">People Talking Is Not Conversation</a><span class="ix-note">— dialogue as action, not transcription</span><span class="soon">Soon</span></li>
+            <li><span class="lx">2.1</span><a href="lesson-1-1.html">You Are Here</a><span class="ix-note">— grounding a scene in space and time</span><span class="soon">Soon</span></li>
+            <li><span class="lx">2.2</span><a href="lesson-1-1.html">People Talking Is Not Conversation</a><span class="ix-note">— dialogue as action, not transcription</span><span class="soon">Soon</span></li>
           </ul>
         </div>
 
         <div class="unit-block u3" id="unit-3">
-          <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;III</span> Character</h3>
+          <h3 class="barhead unit-head"><span>Unit III · Character</span></h3>
           <p class="unit-note">Building people the reader can't look away from — want, fear, and contradiction.</p>
           <ul class="index-list">
-            <li><span class="lx">3.1</span><a class="lpop" href="lesson-1-1.html" data-title="3.1 · Everybody Wants Something" data-status="Outlined" data-note="Desire is the engine of character. Without a want, there is no story to tell.">Everybody Wants Something</a><span class="ix-note">— desire is the engine of character</span><span class="soon">Soon</span></li>
-            <li><span class="lx">3.2</span><a class="lpop" href="lesson-1-1.html" data-title="3.2 · The Lie They Tell Themselves" data-status="Outlined" data-note="Interiority and self-deception: the gap between what a character believes and what's true.">The Lie They Tell Themselves</a><span class="ix-note">— interiority and self-deception</span><span class="soon">Soon</span></li>
+            <li><span class="lx">3.1</span><a href="lesson-1-1.html">Everybody Wants Something</a><span class="ix-note">— desire is the engine of character</span><span class="soon">Soon</span></li>
+            <li><span class="lx">3.2</span><a href="lesson-1-1.html">The Lie They Tell Themselves</a><span class="ix-note">— interiority and self-deception</span><span class="soon">Soon</span></li>
           </ul>
         </div>
 
         <div class="unit-block u4" id="unit-4">
-          <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;IV</span> Plot &amp; Structure</h3>
+          <h3 class="barhead unit-head"><span>Unit IV · Plot &amp; Structure</span></h3>
           <p class="unit-note">Cause, effect, escalation — the shape of a story that actually pays off.</p>
           <ul class="index-list">
-            <li><span class="lx">4.1</span><a class="lpop" href="lesson-1-1.html" data-title="4.1 · And Then, Therefore, But" data-status="Outlined" data-note="The grammar of cause and effect that turns a list of events into a plot.">And Then, Therefore, But</a><span class="ix-note">— the grammar of cause and effect</span><span class="soon">Soon</span></li>
-            <li><span class="lx">4.2</span><a class="lpop" href="lesson-1-1.html" data-title="4.2 · Make It Worse" data-status="Outlined" data-note="Raising the stakes honestly, without cheating the reader or the character.">Make It Worse</a><span class="ix-note">— raising the stakes without cheating</span><span class="soon">Soon</span></li>
+            <li><span class="lx">4.1</span><a href="lesson-1-1.html">And Then, Therefore, But</a><span class="ix-note">— the grammar of cause and effect</span><span class="soon">Soon</span></li>
+            <li><span class="lx">4.2</span><a href="lesson-1-1.html">Make It Worse</a><span class="ix-note">— raising the stakes without cheating</span><span class="soon">Soon</span></li>
           </ul>
         </div>
 
         <div class="unit-block u5" id="unit-5">
-          <h3 class="unit-head"><span class="unit-tag">Unit&nbsp;V</span> Revision</h3>
+          <h3 class="barhead unit-head"><span>Unit V · Revision</span></h3>
           <p class="unit-note">Where bad first drafts quietly become good stories.</p>
           <ul class="index-list">
-            <li><span class="lx">5.1</span><a class="lpop" href="lesson-1-1.html" data-title="5.1 · Kill Your Darlings, Bury The Bodies" data-status="Outlined" data-note="Cutting the lines you love when they aren't serving the story.">Kill Your Darlings, Bury The Bodies</a><span class="ix-note">— cutting what you love for what works</span><span class="soon">Soon</span></li>
+            <li><span class="lx">5.1</span><a href="lesson-1-1.html">Kill Your Darlings, Bury The Bodies</a><span class="ix-note">— cutting what you love for what works</span><span class="soon">Soon</span></li>
           </ul>
         </div>
 
-        <p class="asterism">⁂</p>
+        <p class="asterism">❧</p>
 
-        <h2 class="section-head" id="about">About</h2>
+        <h2 class="barhead section-head" id="about">About</h2>
         <p class="flush">This course is a work in progress, written and revised in
           the open. Lessons marked <span class="smallcaps">soon</span> are
-          outlined but not yet written; the ones without a tag are ready to read.
-          The fastest way to start is simply to <a href="lesson-1-1.html">open
-          Lesson 1.1</a> and do the exercise at the bottom.</p>
+          outlined but not yet written; the ones marked ready are ready to read.
+          The fastest way to start is to <a href="lesson-1-1.html">open Lesson
+          1.1</a> and do the exercise at the bottom.</p>
 
       </article>
-    </div>
-
-    <footer class="site-footer">
-      <p class="epistemic"><b>Status:</b> living document, tended by hand &middot;
-        <b>last updated</b> 2026&#8209;06&#8209;06 &middot; <b>progress</b> 1 of 10 lessons written, 5 units outlined.</p>
-      <p><strong>The Porch</strong> — a small, handmade fiction-writing
-        curriculum. Built in the spirit of <a href="https://drawabox.com">Drawabox</a>,
-        in the typographic tradition of <a href="https://gwern.net">Gwern.net</a>.</p>
-    </footer>
-
+    </main>
   </div>
+
+  <footer class="footbar">
+    <div class="inner">
+      <p class="epistemic"><b>Status:</b> living document, tended by hand ·
+        <b>last updated</b> 2026&#8209;06&#8209;06 · <b>progress</b> 1 of 10 lessons written, 5 units outlined.</p>
+      <p><strong>The Porch</strong> — a small, handmade fiction-writing curriculum.
+        Construction after <a href="https://drawabox.com">Drawabox</a>; typography &amp; functionality after <a href="https://gwern.net">Gwern.net</a>.</p>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
