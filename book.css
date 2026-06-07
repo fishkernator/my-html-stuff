@@ -1,0 +1,347 @@
+/* ============================================================================
+   book.css — "a book on the web"
+   Antiquarian letterpress typography: EB Garamond on cream paper, justified,
+   with Tufte-style margin sidenotes. No framework, no JS. Heavily commented.
+
+   HOW THIS FILE IS ORGANISED
+     1. DESIGN TOKENS .......... fonts, the three inks, the measure  ← EDIT HERE
+     2. @font-face ............. self-hosted EB Garamond (in /fonts)
+     3. BASE & PAGE ............ reset, the paper sheet, running head, colophon
+     4. BODY TYPOGRAPHY ........ justified prose, indents, drop cap, headings
+     5. FRONT MATTER ........... title block, table of contents, 2-col spread
+     6. SIDENOTES .............. numbered sidenotes + unnumbered margin notes
+     7. DARK MODE .............. prefers-color-scheme (optional)
+   To restyle the book you almost never need to leave section 1.
+   ============================================================================ */
+
+/* ============================================================================
+   1. DESIGN TOKENS  ──  change colour, type, and measure here and nowhere else
+   ============================================================================ */
+:root {
+  /* — THE THREE INKS (everything else is derived from these) ————————— */
+  --paper:  #FBF7EF;   /* warm ivory page          */
+  --ink:    #211D1A;   /* warm near-black body ink */
+  --rubric: #9B1C1C;   /* brick/vermilion — title, drop cap, links */
+
+  /* — subtle derivatives (no new colours, just mixes of the three) ——— */
+  --ink-soft: color-mix(in oklab, var(--ink) 68%, var(--paper)); /* notes, running head */
+  --rule:     color-mix(in oklab, var(--ink) 26%, var(--paper)); /* hairlines, leaders  */
+  --rubric-soft: color-mix(in oklab, var(--rubric) 80%, var(--paper));
+
+  /* — THE MEASURE (line length) and the right margin that holds notes —— */
+  --measure:    33em;   /* ≈ 65 characters in EB Garamond. The reading width. */
+  --note-width: 15em;   /* width of a margin note                            */
+  --note-gap:   2.5em;  /* space between the text column and its notes        */
+  /* total width of the "paper sheet" = measure + gap + note column          */
+  --sheet: calc(var(--measure) + var(--note-gap) + var(--note-width));
+
+  /* — TYPE: one modular scale (ratio 1.2), body ≈ 20px ————————————————— */
+  --ratio: 1.2;
+  --size-0:  1.25rem;                          /* body            ~20px */
+  --size--1: calc(var(--size-0)  / var(--ratio)); /* notes, folios ~17px */
+  --size-1:  calc(var(--size-0)  * var(--ratio)); /* h3            ~24px */
+  --size-2:  calc(var(--size-1)  * var(--ratio)); /* section head  ~29px */
+  --size-3:  calc(var(--size-2)  * var(--ratio)); /* title         ~35px */
+  --leading: 1.46;
+
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+}
+
+/* ============================================================================
+   2. @font-face  ──  self-hosted, subsetted woff2 (no CDN at runtime)
+   Two subsets per style keep files small; the browser fetches only what a
+   page actually uses. font-display: swap → text paints immediately in Georgia,
+   then swaps to Garamond with no layout shift (metrics are close).
+   ============================================================================ */
+@font-face {
+  font-family: "EB Garamond"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/ebgaramond-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/ebgaramond-400-latinext.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "EB Garamond"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("fonts/ebgaramond-italic-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "EB Garamond"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("fonts/ebgaramond-italic-400-latinext.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* ============================================================================
+   3. BASE & PAGE
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--size-0);
+  line-height: var(--leading);
+  /* oldstyle figures + ligatures + kerning: the marks of a real text face */
+  font-feature-settings: "onum" 1, "kern" 1, "liga" 1;
+  font-variant-numeric: oldstyle-nums;
+}
+
+/* The "paper sheet": one centred column the width of measure + note margin.
+   Header, main and footer all share this width so everything lines up.       */
+.running-head, .page, .colophon {
+  max-width: var(--sheet);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+main.page { padding-block: clamp(2rem, 5vw, 4rem); }
+
+/* Running header: book / section, in faint small caps under a hairline. */
+.running-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1em;
+  padding-top: 1.1rem; padding-bottom: .55rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--size--1); color: var(--ink-soft);
+  font-variant: small-caps; letter-spacing: .06em;
+}
+.running-head a { color: inherit; text-decoration: none; }
+.running-head a:hover { color: var(--rubric); }
+.running-head .folio { font-style: italic; font-variant: normal; letter-spacing: 0; }
+
+/* Colophon footer */
+.colophon {
+  margin-top: 3rem; padding-top: 1.4rem; padding-bottom: 3rem;
+  text-align: center; color: var(--ink-soft); font-size: var(--size--1);
+  border-top: 1px solid var(--rule);
+}
+.colophon p { margin: .5rem 0; text-indent: 0; }
+.colophon .fleuron { margin: 0 auto .6rem; }
+
+/* Printer's ornament (inline SVG). Decorative → aria-hidden in markup. */
+.fleuron { display: block; width: 2.6em; height: auto; color: var(--rubric); }
+.fleuron svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+.divider { display: flex; justify-content: center; margin: 2.2rem 0; }
+.divider .fleuron { width: 2.2em; }
+
+/* Links: rubric, restrained underline. (AA: rubric on paper ≈ 6.6:1.) */
+a { color: var(--rubric); text-decoration-thickness: .06em; text-underline-offset: .12em; }
+a:hover { text-decoration: none; }
+
+:focus-visible { outline: 2px solid var(--rubric); outline-offset: 3px; border-radius: 1px; }
+
+/* ============================================================================
+   4. BODY TYPOGRAPHY  ──  the book look lives here
+   ============================================================================ */
+.chapter { position: relative; }
+
+/* Prose blocks sit at the measure, left-aligned in the sheet; the column to
+   their right is reserved for sidenotes. The measure is the SAME whether or
+   not a note is present, because notes float out via negative margin (§6).   */
+.chapter > p,
+.chapter > h2,
+.chapter > h3,
+.chapter > blockquote,
+.chapter > .divider,
+.chapter > .chapter-foot { max-width: var(--measure); }
+
+/* Justified, hyphenated body — needs lang="en" on <html> for good breaks. */
+.chapter p {
+  margin: 0;
+  text-align: justify;
+  hyphens: auto;
+  text-indent: 1.3em;           /* first-line indent marks each new paragraph */
+}
+
+/* THE detail that makes it read as a book, not a blog:
+   the first paragraph of the chapter and any paragraph after a heading or a
+   break has NO indent; every following paragraph does, with no blank line.   */
+.chapter > p:first-of-type,
+h1 + p, h2 + p, h3 + p,
+.divider + p,
+blockquote + p,
+p.opening { text-indent: 0; }
+
+/* Opening drop cap: clean oldstyle CSS initial, three lines tall, in rubric.
+   The first few words are set in small caps via <span class="runin">.        */
+p.opening::first-letter {
+  float: left;
+  font-size: 3.4em; line-height: .82;
+  padding: .02em .08em 0 0;
+  color: var(--rubric);
+  font-weight: 400;
+}
+/* Browsers that support it get a typographically exact 3-line initial. */
+@supports (initial-letter: 3) {
+  p.opening::first-letter { initial-letter: 3; font-size: 100%; line-height: normal; padding: 0 .08em 0 0; }
+}
+/* OPTIONAL decorative initial: delete the ::first-letter rules above and drop
+   an <svg class="initial"> as the paragraph's first child to use a real
+   engraved letter. Ship the clean CSS cap by default — do not fake a woodcut. */
+.runin { font-variant: small-caps; letter-spacing: .02em; }
+
+/* Headings — hierarchy from small caps, size, italics and rubric; never bold. */
+h1, h2, h3 { font-weight: 400; line-height: 1.15; }
+h2 {
+  font-variant: small-caps; letter-spacing: .04em;
+  font-size: var(--size-2); color: var(--rubric);
+  margin: 2rem 0 .6rem; text-indent: 0;
+}
+h3 {
+  font-style: italic; font-size: var(--size-1);
+  margin: 1.5rem 0 .3rem; text-indent: 0;
+}
+
+/* Blockquote — set in from the measure, italic, no quotation marks. */
+blockquote {
+  margin: 1.4rem 0 1.4rem 1.6em;
+  padding-left: 1em;
+  border-left: 1px solid var(--rule);
+  font-style: italic; color: var(--ink-soft);
+}
+blockquote p { text-indent: 0; text-align: left; }
+blockquote cite { display: block; font-style: normal; font-variant: small-caps; letter-spacing: .04em; font-size: var(--size--1); margin-top: .4rem; }
+
+em, i, cite { font-style: italic; }
+abbr, .sc { font-variant: small-caps; letter-spacing: .03em; }
+
+/* "Return to the contents" line at the foot of a chapter */
+.chapter-foot { text-align: center; margin-top: 2.4rem; font-variant: small-caps; letter-spacing: .05em; }
+
+/* ============================================================================
+   5. FRONT MATTER  (index.html)
+   ============================================================================ */
+.titleblock { text-align: center; margin: 1.5rem 0 2rem; }
+.titleblock .book-title {
+  font-variant: small-caps; letter-spacing: .14em; font-weight: 400;
+  font-size: var(--size-3); line-height: 1.1; color: var(--rubric); margin: 0;
+}
+.titleblock .book-subtitle {
+  font-style: italic; font-size: var(--size-1); color: var(--rubric-soft);
+  margin: .5rem 0 0;
+}
+
+/* a short preface; on wide screens it may become a two-column justified spread */
+.preface p { text-align: justify; hyphens: auto; text-indent: 1.3em; margin: 0; }
+.preface p:first-of-type { text-indent: 0; }
+
+/* Table of contents — book style with dotted leaders, no page numbers. */
+.contents { max-width: var(--measure); margin: 1rem auto 0; }
+.contents h2 { text-align: center; }
+.contents ol { list-style: none; margin: 0; padding: 0; }
+.contents .part {
+  font-variant: small-caps; letter-spacing: .06em; color: var(--ink-soft);
+  margin: 1.1rem 0 .2rem;
+}
+.toc-entry { display: flex; align-items: baseline; gap: .4em; margin: .15rem 0; }
+.toc-entry .num { color: var(--rubric); min-width: 2.4em; font-variant-numeric: oldstyle-nums; }
+.toc-entry a { text-decoration: none; color: var(--ink); }
+.toc-entry a:hover { color: var(--rubric); }
+.toc-entry .leader { flex: 1; border-bottom: 1px dotted var(--rule); transform: translateY(-.28em); }
+
+/* ── OPTIONAL desktop "spread": front matter only, ≥1100px. Two justified
+   columns on the tall sheet, evoking an open book. Sidenotes are suppressed
+   here (there is no margin); front matter has none anyway. If it does not
+   balance for your content, simply remove class="spread" — the single sheet
+   is the priority and works everywhere.                                       */
+@media (min-width: 1100px) {
+  .frontmatter.spread { max-width: 48em; }
+  .frontmatter.spread .preface {
+    columns: 2; column-gap: 3em; column-rule: 1px solid var(--rule);
+    margin-top: 1.5rem;
+  }
+  /* title, divider and contents span both columns */
+  .frontmatter.spread > .titleblock,
+  .frontmatter.spread > .divider,
+  .frontmatter.spread > .contents { column-span: all; }
+}
+
+/* ============================================================================
+   6. SIDENOTES  (Tufte technique — pure CSS, no JavaScript)
+   ----------------------------------------------------------------------------
+   TO ADD A NUMBERED SIDENOTE, paste this right after the word it annotates:
+
+     <label class="margin-toggle sidenote-ref" for="sn-N"></label
+     ><input type="checkbox" id="sn-N" class="margin-toggle"
+     ><span class="sidenote">Your note.</span>
+
+   TO ADD AN UNNUMBERED MARGIN NOTE (a free-floating side summary):
+
+     <label class="margin-toggle" for="mn-N">&#8853;</label
+     ><input type="checkbox" id="mn-N" class="margin-toggle"
+     ><span class="marginnote">Your note.</span>
+
+   Give every note a unique id (sn-1, sn-2, mn-1 …). Numbering is automatic.
+   ============================================================================ */
+.chapter { counter-reset: sidenote; }
+
+/* the superscript number, drawn on the in-text marker */
+.sidenote-ref::after {
+  counter-increment: sidenote;
+  content: counter(sidenote);
+  font-size: .72em; vertical-align: super; line-height: 0;
+  color: var(--rubric); margin-left: .08em;
+}
+/* the matching number, drawn before the note in the margin */
+.sidenote::before {
+  content: counter(sidenote) ".\00A0";
+  color: var(--rubric);
+}
+
+/* the note itself, floated into the right margin (escapes measure via the
+   negative margin-right, so the prose column never narrows)                   */
+.sidenote, .marginnote {
+  float: right; clear: right;
+  width: var(--note-width);
+  margin-right: calc(-1 * (var(--note-width) + var(--note-gap)));
+  margin-top: .15rem; margin-bottom: .9rem;
+  font-size: var(--size--1); line-height: 1.4;
+  text-align: left; text-indent: 0; hyphens: none;
+  color: var(--ink-soft);
+}
+
+/* the checkbox is plumbing; the number marker is the only thing always shown */
+input.margin-toggle { display: none; }
+label.sidenote-ref { display: inline; cursor: default; }
+label.margin-toggle:not(.sidenote-ref) { display: none; }  /* ⊕ hidden on wide */
+
+/* ── Narrow screens: no room for a margin. Notes collapse and reveal inline
+   when the marker (or ⊕) is tapped — the classic checkbox+label toggle.       */
+@media (max-width: 760px) {
+  label.margin-toggle:not(.sidenote-ref) {
+    display: inline; color: var(--rubric); cursor: pointer;
+  }
+  .sidenote, .marginnote { display: none; }
+  .margin-toggle:checked + .sidenote,
+  .margin-toggle:checked + .marginnote {
+    display: block; float: none;
+    width: auto; max-width: var(--measure);
+    margin: .7rem 0; padding: .5rem .9rem;
+    border-left: 2px solid var(--rubric-soft);
+    background: color-mix(in oklab, var(--paper) 94%, var(--ink));
+  }
+  /* on phones the reserved note column would waste space — reclaim full width */
+  .chapter > p, .chapter > h2, .chapter > h3,
+  .chapter > blockquote, .chapter > .divider, .chapter > .chapter-foot,
+  .contents, .preface { max-width: none; }
+}
+
+/* ============================================================================
+   7. DARK MODE  (optional, automatic — inverted paper/ink, dimmer rubric)
+   Only the three base inks change; every derived value follows.
+   ============================================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #1A1613;  /* dark warm ground   */
+    --ink:    #ECE3D4;  /* cream text         */
+    --rubric: #CB6A57;  /* dimmer vermilion (AA on the dark ground) */
+  }
+}
+
+/* No animation anywhere, so nothing to disable under prefers-reduced-motion. */
